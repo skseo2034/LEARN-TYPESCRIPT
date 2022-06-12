@@ -2,7 +2,7 @@
   "name": "project",
   "version": "1.0.0",
   "description": "최종 프로젝트 폴더입니다",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
 	"build": "tsc"

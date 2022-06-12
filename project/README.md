@@ -9,7 +9,7 @@
 0. 자바 스크립트 파일에 JSDoc으로 타입 시스템 입히기
 1. 타입스크립트 프로젝트 생성 : 우리는 이미 생성된 프로젝트로 함으로 실제로는 타입스크립트 기본 환경 구성 이 맞다.
 	project > 마우스 오른쪽 통합 터미널 오픈(Open in integrated terminal)
-	- [x] NPM 초기화 : pm init -y 실행 package.json 생성
+	- [x] NPM 초기화 : npm init -y 실행 package.json 생성
 	- [x] 타입스크립트 라이브러리 설치 : npm i typescript --save-dev 실행 하여 타입스크립트 설치
 	- [x] 타입스크립트 설정 파일 생성 및 기본 값 추가
 	```
@@ -35,6 +35,22 @@
 						// ES6의 기본 값: dom, dom.iterable, es6, scripthost
 						// 위의 기본 값 대신에 커스텀하게 라이브러리를 쓰려고 할 때, lib을 정의하여 사용합니다.					  
 	```
+
+	```
+	{
+	"compilerOptions": {
+		"allowJs": true,
+		"target": "ES5",
+		"outDir": "./built",
+		"moduleResolution": "Node",
+		"lib": ["ES2015", "DOM", "DOM.Iterable"],
+		"noImplicitAny": true
+	},
+	"include": ["./src/**/*"],
+	"exclude": ["node_modules", "built"]
+}
+	```
+
 	```
 	allowJs 를 true 로 하면 js 를 그대로 js 컴파일 할수 있다.
 	즉, tsc 명령어로 js 파일을 js로 컴파일 된다. 물론 내용은 달라진다.
