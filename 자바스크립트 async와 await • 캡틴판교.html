@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<!-- saved from url=(0071)https://joshua1988.github.io/web-development/javascript/js-async-await/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="cleartype" content="on">
+    <!-- pwa -->
+    <link rel="icon" href="https://joshua1988.github.io/images/share_logo.png">
+    <meta name="theme-color" content="#343D57">
+    <!-- pwa - apple -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon" href="https://joshua1988.github.io/images/icons/152x.png">
+    <!-- pwa - ms -->
+    <meta name="msapplication-TileImage" content="https://joshua1988.github.io/images/icons/144x.png">
+    <meta name="msapplication-TileColor" content="#343D57">
+    <!-- Google Tag Manager -->
+    <script type="text/javascript" async="" src="./자바스크립트 async와 await • 캡틴판교_files/analytics.js.다운로드"></script><script async="" src="./자바스크립트 async와 await • 캡틴판교_files/analytics.js.다운로드"></script><script async="" src="./자바스크립트 async와 await • 캡틴판교_files/gtm.js.다운로드"></script><script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-N86CL4S");
+    </script>
+    <!-- End Google Tag Manager -->
+    <title>
+      자바스크립트 async와 await • 캡틴판교
+    </title>
+     
+    <meta name="description" content="(중급) 자바스크립트 개발자를 위한 async, await 사용법 설명. 쉽게 알아보는 자바스크립트 async await 개념, 사용법, 예제 코드, 예외 처리 방법">
+     
+    <meta name="keywords" content="async await, async await 예제, async await 사용법, vue async await, 자바스크립트 async await, javascript 비동기를 동기로, 자바스크립트, 자바스크립트 기초, 자바스크립트 기초 예제, 자바스크립트 기본, 자바스크립트 강좌, 자바스크립트 비동기, 자바스크립트 비동기 처리, 자바스크립트 비동기 프로그래밍, 자바스크립트 비동기 함수, 자바스크립트 입문, 자바스크립트 초급, 자바스크립트 시작하기, 자바스크립트 코딩 면접, javascript 코딩 면접, 자바스크립트 입문 책, 자바스크립트 서적, 캡틴판교, 장기효, 인프런, 패스트 캠퍼스">
+      		<!-- Facebook Open Graph -->
+		<meta property="og:locale" content="ko_KR">
+		<meta property="og:type" content="article">
+		<meta property="og:title" content="자바스크립트 async와 await">
+		<meta property="og:description" content="(중급) 자바스크립트 개발자를 위한 async, await 사용법 설명. 쉽게 알아보는 자바스크립트 async await 개념, 사용법, 예제 코드, 예외 처리 방법">
+		<meta property="og:url" content="https://joshua1988.github.io/web-development/javascript/js-async-await/">
+		<meta property="og:site_name" content="캡틴판교">
+		
+			<meta property="og:image" content="https://joshua1988.github.io/images/posts/web/javascript/async-await.png">
+		
+		<meta property="og:image:secure_url" content="https://joshua1988.github.io/images/share_logo.png">
+
+		<!-- Twitter Cards -->
+		<meta name="twitter:title" content="자바스크립트 async와 await">
+		<meta name="twitter:description" content="(중급) 자바스크립트 개발자를 위한 async, await 사용법 설명. 쉽게 알아보는 자바스크립트 async await 개념, 사용법, 예제 코드, 예외 처리 방법">
+		
+		
+		
+		<meta name="twitter:card" content="summary">
+		<meta name="twitter:image" content="https://joshua1988.github.io/images/share_logo.png">
+
+		
+
+
+    <link rel="manifest" href="https://joshua1988.github.io/manifest.json">
+    <link rel="canonical" href="https://joshua1988.github.io/web-development/javascript/js-async-await/">
+
+    <link href="https://joshua1988.github.io/atom.xml" type="application/atom+xml" rel="alternate" title="캡틴판교 Atom Feed">
+    <link rel="alternate" type="application/rss+xml" title="캡틴판교" href="https://joshua1988.github.io/atom.xml">
+    <link href="https://joshua1988.github.io/sitemap.xml" type="application/xml" rel="sitemap" title="Sitemap">
+    <link rel="stylesheet" href="./자바스크립트 async와 await • 캡틴판교_files/main.css">
+    <style>
+      blockquote p {
+        line-height: 2;
+      }
+      @media screen and (max-width: 700px) {
+        blockquote p {
+          line-height: 1.5;
+        }
+      }
+    </style>
+    <link rel="stylesheet" href="./자바스크립트 async와 await • 캡틴판교_files/prism.css">
+    <link rel="stylesheet" href="./자바스크립트 async와 await • 캡틴판교_files/prism-nightowl.css">
+  <script type="text/javascript" async="" src="./자바스크립트 async와 await • 캡틴판교_files/embed.js.다운로드"></script><script src="./자바스크립트 async와 await • 캡틴판교_files/0da836e543" async="" type="text/javascript"></script><style id="fit-vids-style">.fluid-width-video-wrapper{width:100%;position:relative;padding:0;}.fluid-width-video-wrapper iframe,.fluid-width-video-wrapper object,.fluid-width-video-wrapper embed {position:absolute;top:0;left:0;width:100%;height:100%;}</style><script src="./자바스크립트 async와 await • 캡틴판교_files/0da836e543(1)" async="" type="text/javascript"></script><link rel="prefetch" as="style" href="https://c.disquscdn.com/next/embed/styles/lounge.63860eb743c7d9d2adf0fa435788abe7.css"><link rel="prefetch" as="script" href="https://c.disquscdn.com/next/embed/common.bundle.33bc87b2c4f9324203cc85b7dd1d0492.js"><link rel="prefetch" as="script" href="https://c.disquscdn.com/next/embed/lounge.bundle.275044d1ea778800bd83f8337ba3d84e.js"><link rel="prefetch" as="script" href="https://disqus.com/next/config.js"><script async="" id="dsq_recs_scr" src="./자바스크립트 async와 await • 캡틴판교_files/recommendations.js.다운로드"></script><link rel="prefetch" as="style" href="https://c.disquscdn.com/next/recommendations/styles/recommendations.10022a97346f1c6e3798931bbd8e4bb5.css"><link rel="prefetch" as="script" href="https://c.disquscdn.com/next/recommendations/common.bundle.a59fbd11efae764ccd959d61e4925fee.js"><link rel="prefetch" as="script" href="https://c.disquscdn.com/next/recommendations/recommendations.bundle.926bc472e4859a48daa346b4ba2ab4f4.js"><link rel="prefetch" as="script" href="https://disqus.com/next/config.js"></head>
+
+  <body id="js-body">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-N86CL4S"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe
+    ></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <!--[if lt IE 9]><div class="upgrade notice-warning"><strong>Your browser is quite old!</strong> Why not <a href="http://whatbrowser.org/">upgrade to a newer one</a> to better enjoy this site?</div><![endif]-->
+ <header id="masthead">
+  <div class="inner-wrap">
+    <a href="https://joshua1988.github.io/" class="site-title"><img src="./자바스크립트 async와 await • 캡틴판교_files/2021-logo.png" alt="캡틴판교 로고" style="margin-top:-1rem;"></a>
+    <nav role="navigation" class="menu top-menu">
+        <ul class="menu-item">
+	<li class="home"><a href="https://joshua1988.github.io/">캡틴판교</a></li>
+	
+    
+		
+    	<li><a href="https://joshua1988.github.io/tech/">Tech</a></li>
+		
+  
+    
+		
+    	<li><a href="https://joshua1988.github.io/singing/">Singing</a></li>
+		
+  
+    
+		
+    	<li><a href="https://joshua1988.github.io/life/">Life</a></li>
+		
+  
+    
+		
+    	<li><a href="https://joshua1988.github.io/about/">About</a></li>
+		
+  
+    
+		
+  
+    
+		
+  
+    
+		
+  
+    
+		
+  
+    
+		
+  
+    
+		
+  
+    
+		
+  
+    
+		
+  
+    
+		
+  
+    
+		
+  
+    
+		
+  
+    
+		
+  
+</ul>
+
+    </nav>
+  </div><!-- /.inner-wrap -->
+</header><!-- /.masthead -->
+ <nav role="navigation" id="js-menu" class="sliding-menu-content" style="display: inherit;">
+  <h5>캡틴판교</h5>
+  <ul class="menu-item">
+    <!-- <li>
+      <a href="https://joshua1988.github.io/tech/">
+        
+        
+        <div class="title">Tech</div>
+        
+        <p class="excerpt">Useful information in Software Development</p>
+      </a>
+    </li><li>
+      <a href="https://joshua1988.github.io/singing/">
+        
+        
+        <div class="title">Singing</div>
+        
+        <p class="excerpt">Love to sing a song for people</p>
+      </a>
+    </li><li>
+      <a href="https://joshua1988.github.io/life/">
+        
+        
+        <p class="excerpt">Things we do in daily lives</p>
+      </a>
+    </li><li>
+      <a href="https://joshua1988.github.io/about/">
+        
+        
+        <div class="title">About</div>
+        
+        <p class="excerpt">Who is Captain Pangyo?</p>
+      </a>
+    </li><li>
+      <a href="https://joshua1988.github.io/pwa/">
+        
+        
+        
+      </a>
+    </li><li>
+      <a href="https://joshua1988.github.io/vuejs/">
+        
+        
+        
+      </a>
+    </li><li>
+      <a href="https://joshua1988.github.io/angular/">
+        
+        
+        
+      </a>
+    </li><li>
+      <a href="https://joshua1988.github.io/javascript/">
+        
+        
+        
+      </a>
+    </li><li>
+      <a href="https://joshua1988.github.io/css/">
+        
+        
+        
+      </a>
+    </li><li>
+      <a href="https://joshua1988.github.io/design/">
+        
+        
+        
+      </a>
+    </li><li>
+      <a href="https://joshua1988.github.io/web-perf/">
+        
+        
+        
+      </a>
+    </li><li>
+      <a href="https://joshua1988.github.io/amp/">
+        
+        
+        
+      </a>
+    </li><li>
+      <a href="https://joshua1988.github.io/opinions/">
+        
+        
+        
+      </a>
+    </li><li>
+      <a href="https://joshua1988.github.io/translation/">
+        
+        
+        
+      </a>
+    </li><li>
+      <a href="https://joshua1988.github.io/web-development/">
+        
+        
+        <p class="excerpt"></p>
+      </a>
+    </li><li>
+      <a href="https://joshua1988.github.io/webpack/">
+        
+        
+        <p class="excerpt"></p>
+      </a>
+    </li> -->
+
+    
+      
+      <a href="https://joshua1988.github.io/tech/">
+        <div class="title">Tech</div>
+        
+        </a><li><a href="https://joshua1988.github.io/tech/">
+          
+            
+            
+            </a><a href="https://joshua1988.github.io/web-development" class="excerpt" name="web-development">web-development (60)</a>
+            
+            
+          
+            
+            
+            <a href="https://joshua1988.github.io/web-perf" class="excerpt" name="web-perf">web-perf (1)</a>
+            
+            
+          
+            
+            
+            
+          
+            
+            
+            <a href="https://joshua1988.github.io/angular" class="excerpt" name="angular">angular (1)</a>
+            
+            
+          
+            
+            
+            <a href="https://joshua1988.github.io/javascript" class="excerpt" name="javascript">javascript (14)</a>
+            
+            
+          
+            
+            
+            <a href="https://joshua1988.github.io/pwa" class="excerpt" name="pwa">pwa (4)</a>
+            
+            
+          
+            
+            
+            <a href="https://joshua1988.github.io/amp" class="excerpt" name="amp">amp (1)</a>
+            
+            
+          
+            
+            
+            <a href="https://joshua1988.github.io/translation" class="excerpt" name="translation">translation (9)</a>
+            
+            
+          
+            
+            
+            <a href="https://joshua1988.github.io/vuejs" class="excerpt" name="vuejs">vuejs (16)</a>
+            
+            
+          
+            
+          
+            
+            
+            <a href="https://joshua1988.github.io/opinions" class="excerpt" name="opinions">opinions (5)</a>
+            
+            
+          
+            
+            
+            <a href="https://joshua1988.github.io/webpack" class="excerpt" name="webpack">webpack (3)</a>
+            
+            
+          
+            
+            
+            <a href="https://joshua1988.github.io/english" class="excerpt" name="english">english (1)</a>
+            
+            
+          
+            
+            
+            <a href="https://joshua1988.github.io/css" class="excerpt" name="css">css (1)</a>
+            
+            
+          
+            
+            
+            <a href="https://joshua1988.github.io/npm" class="excerpt" name="npm">npm (1)</a>
+            
+            
+          
+            
+            
+            <a href="https://joshua1988.github.io/design" class="excerpt" name="design">design (1)</a>
+            
+            
+          
+            
+            
+            <a href="https://joshua1988.github.io/interview" class="excerpt" name="interview">interview (1)</a>
+            
+            
+          
+            
+            
+            <a href="https://joshua1988.github.io/life" class="excerpt" name="life">life (1)</a>
+            
+            
+          
+        </li>
+        
+      
+      
+    
+      
+      <a href="https://joshua1988.github.io/singing/">
+        <div class="title">Singing</div>
+        
+          <li>
+            <p class="excerpt">Love to sing a song for people</p>
+          </li>
+        
+      </a>
+      
+    
+      
+    
+      
+      <a href="https://joshua1988.github.io/about/">
+        <div class="title">About</div>
+        
+          <li>
+            <p class="excerpt">Who is Captain Pangyo?</p>
+          </li>
+        
+      </a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </ul>
+</nav>
+<button type="button" id="js-menu-trigger" class="sliding-menu-button lines-button x2" role="button" aria-label="Toggle Navigation">
+  <span class="nav-lines"></span>
+</button>
+
+<div id="js-menu-screen" class="menu-screen"></div>
+
+
+    <div id="page-wrapper">
+      <div id="main" role="main">
+	<article class="wrap" itemscope="" itemtype="http://schema.org/Article">
+		
+		
+  <nav class="breadcrumbs">
+    <span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="https://joshua1988.github.io/" itemprop="url">
+        <span itemprop="title">Home</span>
+      </a> › 
+    <span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="https://joshua1988.github.io/web-development/" itemprop="url">
+        <span itemprop="title">Web development</span>
+      </a>
+    </span>
+  </span></nav><!-- /.breadcrumbs -->
+
+		<div class="page-title">
+			<h1>자바스크립트 async와 await</h1>
+		</div>
+		<div class="inner-wrap">
+			<div id="content" class="page-content" itemprop="articleBody">
+				<nav class="toc">
+<ul id="markdown-toc"><li><h6>목차</h6></li>
+  <li><a href="https://joshua1988.github.io/web-development/javascript/js-async-await/#%EB%93%A4%EC%96%B4%EA%B0%80%EB%A9%B0" id="markdown-toc-들어가며">들어가며</a></li>
+  <li><a href="https://joshua1988.github.io/web-development/javascript/js-async-await/#async--await%EB%8A%94-%EB%AD%94%EA%B0%80%EC%9A%94" id="markdown-toc-async--await는-뭔가요">async &amp; await는 뭔가요?</a></li>
+  <li><a href="https://joshua1988.github.io/web-development/javascript/js-async-await/#%EA%B0%9C%EB%B0%9C%EC%9E%90%EC%97%90%EA%B2%8C-%EC%9D%BD%EA%B8%B0-%EC%A2%8B%EC%9D%80-%EC%BD%94%EB%93%9C%EB%9E%80" id="markdown-toc-개발자에게-읽기-좋은-코드란">개발자에게 읽기 좋은 코드란?</a></li>
+  <li><a href="https://joshua1988.github.io/web-development/javascript/js-async-await/#%EA%B7%B8%EB%9E%98%EC%84%9C-%EC%9D%BD%EA%B8%B0-%EC%A2%8B%EC%9D%80-%EC%BD%94%EB%93%9C%EC%99%80-async--await%EA%B0%80-%EB%AC%B4%EC%8A%A8-%EC%83%81%EA%B4%80%EC%9D%B4%EC%A3%A0" id="markdown-toc-그래서-읽기-좋은-코드와-async--await가-무슨-상관이죠">그래서 읽기 좋은 코드와 async &amp; await가 무슨 상관이죠?</a></li>
+  <li><a href="https://joshua1988.github.io/web-development/javascript/js-async-await/#async--await-%EB%A7%9B%EB%B3%B4%EA%B8%B0" id="markdown-toc-async--await-맛보기">async &amp; await 맛보기</a></li>
+  <li><a href="https://joshua1988.github.io/web-development/javascript/js-async-await/#async--await-%EC%A0%81%EC%9A%A9%EB%90%9C-%EC%BD%94%EB%93%9C%EC%99%80-%EA%B7%B8%EB%A0%87%EC%A7%80-%EC%95%8A%EC%9D%80-%EC%BD%94%EB%93%9C" id="markdown-toc-async--await-적용된-코드와-그렇지-않은-코드">async &amp; await 적용된 코드와 그렇지 않은 코드</a></li>
+  <li><a href="https://joshua1988.github.io/web-development/javascript/js-async-await/#async--await-%EA%B8%B0%EB%B3%B8-%EB%AC%B8%EB%B2%95" id="markdown-toc-async--await-기본-문법">async &amp; await 기본 문법</a></li>
+  <li><a href="https://joshua1988.github.io/web-development/javascript/js-async-await/#async--await-%EA%B0%84%EB%8B%A8%ED%95%9C-%EC%98%88%EC%A0%9C" id="markdown-toc-async--await-간단한-예제">async &amp; await 간단한 예제</a></li>
+  <li><a href="https://joshua1988.github.io/web-development/javascript/js-async-await/#async--await-%EC%8B%A4%EC%9A%A9-%EC%98%88%EC%A0%9C" id="markdown-toc-async--await-실용-예제">async &amp; await 실용 예제</a></li>
+  <li><a href="https://joshua1988.github.io/web-development/javascript/js-async-await/#async--await-%EC%98%88%EC%99%B8-%EC%B2%98%EB%A6%AC" id="markdown-toc-async--await-예외-처리">async &amp; await 예외 처리</a></li>
+  <li><a href="https://joshua1988.github.io/web-development/javascript/js-async-await/#%EB%A7%88%EB%AC%B4%EB%A6%AC" id="markdown-toc-마무리">마무리</a></li>
+  <li><a href="https://joshua1988.github.io/web-development/javascript/js-async-await/#%EA%B8%80%EB%B3%B4%EB%8B%A4-%EB%8D%94-%EC%89%BD%EA%B2%8C-%EB%B0%B0%EC%9A%B0%EB%8A%94-%EC%98%A8%EB%9D%BC%EC%9D%B8-%EA%B0%95%EC%A2%8C" id="markdown-toc-글보다-더-쉽게-배우는-온라인-강좌">글보다 더 쉽게 배우는 온라인 강좌</a></li>
+  <li><a href="https://joshua1988.github.io/web-development/javascript/js-async-await/#%EC%9D%B4%ED%95%B4%EA%B0%80-%EC%9E%98-%EC%95%88%EB%90%98%EC%8B%9C%EB%82%98%EC%9A%94-%EB%B0%A9%EC%86%A1%EC%97%90%EC%84%9C-%EC%A7%81%EC%A0%91-%EB%AC%BC%EC%96%B4%EB%B3%B4%EC%84%B8%EC%9A%94-" id="markdown-toc-이해가-잘-안되시나요-방송에서-직접-물어보세요-">이해가 잘 안되시나요? 방송에서 직접 물어보세요 :)</a></li>
+</ul>
+
+</nav>
+
+<h2 id="들어가며">들어가며</h2>
+
+<p>안녕하세요. 오랜만에 글을 올립니다. 작년에 Promise 글을 작성할 때까지만 해도 Async 편을 작성하는 데까지
+이렇게 오랜 시간이 걸릴 거라고는 생각 못 했네요 :)</p>
+
+<p>기존 글에 많은 응원과 댓글 남겨주셔서 감사하게 받아보고 있습니다.
+계속 글 구성만 고민하다가 이제서야 글을 작성합니다.</p>
+
+<p>이번 글에서 살펴볼 내용은 자바스크립트의 비동기 처리 시리즈의 마지막 연재물 async &amp; await 문법입니다.
+처음 접하시는 분들이 최대한 이해하기 쉽게 코드와 글을 풀어서 작성했으니 재밌게 읽으셨으면 좋겠습니다 :)</p>
+
+<p>그리고, 이번 글을 읽으시려면 꼭 <a href="https://joshua1988.github.io/web-development/javascript/javascript-asynchronous-operation/">비동기 처리 및 콜백 함수</a>와 <a href="https://joshua1988.github.io/web-development/javascript/promise-for-beginners/">Promise</a>에 대해 이해하고 계셔야 합니다. 만약 아직 개념을 이해하지 못하셨다면 글을 꼭 읽어보시고 오시는 걸 추천드립니다.</p>
+
+<p>그럼 재밌게 읽으세요! :)</p>
+
+<h2 id="async--await는-뭔가요">async &amp; await는 뭔가요?</h2>
+
+<p>async와 await는 자바스크립트의 비동기 처리 패턴 중 가장 최근에 나온 문법입니다.
+기존의 비동기 처리 방식인 콜백 함수와 프로미스의 단점을 보완하고 
+개발자가 읽기 좋은 코드를 작성할 수 있게 도와주죠.</p>
+
+<h2 id="개발자에게-읽기-좋은-코드란">개발자에게 읽기 좋은 코드란?</h2>
+
+<p>처음 프로그래밍을 배웠을 때 아래와 같이 변수와 조건문을 사용하셨던 기억이 있으시죠?</p>
+
+<pre class="language-js code-toolbar"><code class=" language-js"><span class="token keyword keyword-var">var</span> user <span class="token operator">=</span> <span class="token punctuation">{</span>
+  id<span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+  name<span class="token punctuation">:</span> <span class="token string">'Josh'</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>user<span class="token punctuation">.</span>id <span class="token operator">===</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>user<span class="token punctuation">.</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// Josh</span>
+<span class="token punctuation">}</span>
+</code><div class="toolbar"><div class="toolbar-item"><span>Js</span></div><div class="toolbar-item"><a>Copy</a></div></div></pre>
+
+<p>이 코드는 <code>user</code>라는 변수에 객체를 할당한 뒤 조건문으로 사용자의 아이디를 확인하고 콘솔에 사용자의 <code>name</code>을 찍는 간단한 코드입니다.</p>
+
+<p>우리는 이렇게 위에서부터 아래로 한 줄 한 줄 차근히 읽으면서 사고하는 것이 편합니다.
+그렇게 프로그래밍을 배웠으니까요.</p>
+
+<h2 id="그래서-읽기-좋은-코드와-async--await가-무슨-상관이죠">그래서 읽기 좋은 코드와 async &amp; await가 무슨 상관이죠?</h2>
+
+<p>조금 전에 읽고 이해한 방식대로 코드를 구성하는 것이 async, await 문법의 목적입니다.
+다음 코드를 한번 볼까요?</p>
+
+<pre class="language-js code-toolbar"><code class=" language-js"><span class="token keyword keyword-var">var</span> user <span class="token operator">=</span> <span class="token function">fetchUser</span><span class="token punctuation">(</span><span class="token string">'domain.com/users/1'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>user<span class="token punctuation">.</span>id <span class="token operator">===</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>user<span class="token punctuation">.</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code><div class="toolbar"><div class="toolbar-item"><span>Js</span></div><div class="toolbar-item"><a>Copy</a></div></div></pre>
+
+<p><code>fetchUser()</code>라는 메서드를 호출하면 앞에서 봤던 코드처럼 사용자 객체를 반환한다고 해보겠습니다.
+그리고 여기서 <code>fetchUser()</code> 메서드가 서버에서 사용자 정보를 가져오는 HTTP 통신 코드라고 가정한다면
+위 코드는 async &amp; await 문법이 적용된 형태라고 보셔도 됩니다.</p>
+
+<p>이게 대체 무슨 말인지 아래에서 함께 알아보겠습니다 :)</p>
+
+<h2 id="async--await-맛보기">async &amp; await 맛보기</h2>
+
+<p>먼저 앞에서 살펴본 코드를 <code>logName()</code>이라는 간단한 함수로 감싸보겠습니다.</p>
+
+<pre class="language-js code-toolbar"><code class=" language-js"><span class="token keyword keyword-function">function</span> <span class="token function">logName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword keyword-var">var</span> user <span class="token operator">=</span> <span class="token function">fetchUser</span><span class="token punctuation">(</span><span class="token string">'domain.com/users/1'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>user<span class="token punctuation">.</span>id <span class="token operator">===</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>user<span class="token punctuation">.</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code><div class="toolbar"><div class="toolbar-item"><span>Js</span></div><div class="toolbar-item"><a>Copy</a></div></div></pre>
+
+<p>이제 위 함수를 실행하면 아까와 동일하게 코드가 동작할 겁니다.
+자 그리고 여기서 아래와 같이 <code>async</code>와 <code>await</code>를 추가해주면</p>
+
+<pre class="language-js code-toolbar"><code class=" language-js"><span class="token keyword keyword-async">async</span> <span class="token keyword keyword-function">function</span> <span class="token function">logName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword keyword-var">var</span> user <span class="token operator">=</span> <span class="token keyword keyword-await">await</span> <span class="token function">fetchUser</span><span class="token punctuation">(</span><span class="token string">'domain.com/users/1'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>user<span class="token punctuation">.</span>id <span class="token operator">===</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>user<span class="token punctuation">.</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code><div class="toolbar"><div class="toolbar-item"><span>Js</span></div><div class="toolbar-item"><a>Copy</a></div></div></pre>
+
+<p>짜잔. 이게 바로 async await 코드입니다. 혹시 아직 이해가 정확히 안 가더라도 걱정 마세요. 지금부터 차근히 살펴볼게요! :)</p>
+
+<h2 id="async--await-적용된-코드와-그렇지-않은-코드">async &amp; await 적용된 코드와 그렇지 않은 코드</h2>
+
+<p>자 저희가 조금 전에 본 코드가 대체 어떤 의미인지 한번 알아보겠습니다.
+먼저 아까 살펴봤던 <code>logName()</code> 함수 코드를 다시 보겠습니다.</p>
+
+<pre class="language-js code-toolbar"><code class=" language-js"><span class="token keyword keyword-function">function</span> <span class="token function">logName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword keyword-var">var</span> user <span class="token operator">=</span> <span class="token function">fetchUser</span><span class="token punctuation">(</span><span class="token string">'domain.com/users/1'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>user<span class="token punctuation">.</span>id <span class="token operator">===</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>user<span class="token punctuation">.</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code><div class="toolbar"><div class="toolbar-item"><span>Js</span></div><div class="toolbar-item"><a>Copy</a></div></div></pre>
+
+<p>여기서 <code>fetchUser()</code>라고 하는 코드는 서버에서 데이터를 받아오는 HTTP 통신 코드라고 가정했습니다.
+일반적으로 자바스크립트의 비동기 처리 코드는 아래와 같이 콜백을 사용해야지 코드의 실행 순서를 보장받을 수 있죠.</p>
+
+<pre class="language-js code-toolbar"><code class=" language-js"><span class="token keyword keyword-function">function</span> <span class="token function">logName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">// 아래의 user 변수는 위의 코드와 비교하기 위해 일부러 남겨놓았습니다.</span>
+  <span class="token keyword keyword-var">var</span> user <span class="token operator">=</span> <span class="token function">fetchUser</span><span class="token punctuation">(</span><span class="token string">'domain.com/users/1'</span><span class="token punctuation">,</span> <span class="token keyword keyword-function">function</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>user<span class="token punctuation">.</span>id <span class="token operator">===</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>user<span class="token punctuation">.</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code><div class="toolbar"><div class="toolbar-item"><span>Js</span></div><div class="toolbar-item"><a>Copy</a></div></div></pre>
+
+<p>이미 위와 같이 콜백으로 비동기 처리 코드를 작성하는 게 익숙하신 분들이라면 문제가 없겠지만,
+이 사고방식에 익숙하지 않은 분들은 고개가 갸우뚱할 겁니다.</p>
+
+<p>그래서 저희가 처음 프로그래밍을 배웠던 그때 그 사고로 돌아가는 것이죠.
+아래와 같이 간단하게 생각하자구요.</p>
+
+<pre class="language-js code-toolbar"><code class=" language-js"><span class="token comment" spellcheck="true">// 비동기 처리를 콜백으로 안해도 된다면..</span>
+<span class="token keyword keyword-function">function</span> <span class="token function">logName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword keyword-var">var</span> user <span class="token operator">=</span> <span class="token function">fetchUser</span><span class="token punctuation">(</span><span class="token string">'domain.com/users/1'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>user<span class="token punctuation">.</span>id <span class="token operator">===</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>user<span class="token punctuation">.</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code><div class="toolbar"><div class="toolbar-item"><span>Js</span></div><div class="toolbar-item"><a>Copy</a></div></div></pre>
+
+<p>서버에서 사용자 데이터를 불러와서 변수에 담고, 사용자 아이디가 1이면 사용자 이름을 출력한다.</p>
+
+<p>이렇게 하려면 async await만 붙이시면 됩니다 :)</p>
+
+<pre class="language-js code-toolbar"><code class=" language-js"><span class="token comment" spellcheck="true">// async &amp; await 적용 후</span>
+<span class="token keyword keyword-async">async</span> <span class="token keyword keyword-function">function</span> <span class="token function">logName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword keyword-var">var</span> user <span class="token operator">=</span> <span class="token keyword keyword-await">await</span> <span class="token function">fetchUser</span><span class="token punctuation">(</span><span class="token string">'domain.com/users/1'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>user<span class="token punctuation">.</span>id <span class="token operator">===</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>user<span class="token punctuation">.</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code><div class="toolbar"><div class="toolbar-item"><span>Js</span></div><div class="toolbar-item"><a>Copy</a></div></div></pre>
+
+<p>※참고: 만약 위의 콜백 함수 코드가 와닿지 않는 분들은 <a href="https://joshua1988.github.io/web-development/javascript/javascript-asynchronous-operation/">비동기 처리와 콜백 함수</a> 글을 꼭 다시 읽어보시고 오세요.</p>
+
+<h2 id="async--await-기본-문법">async &amp; await 기본 문법</h2>
+
+<p>이제 async await의 기본 문법을 알아보겠습니다.</p>
+
+<pre class="language-js code-toolbar"><code class=" language-js"><span class="token keyword keyword-async">async</span> <span class="token keyword keyword-function">function</span> <span class="token function">함수명</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword keyword-await">await</span> <span class="token function">비동기_처리_메서드_명</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code><div class="toolbar"><div class="toolbar-item"><span>Js</span></div><div class="toolbar-item"><a>Copy</a></div></div></pre>
+
+<p>먼저 함수의 앞에 <code>async</code> 라는 예약어를 붙입니다.
+그러고 나서 함수의 내부 로직 중 HTTP 통신을 하는 비동기 처리 코드 앞에 <code>await</code>를 붙입니다.
+여기서 주의하셔야 할 점은 비동기 처리 메서드가 꼭 프로미스 객체를 반환해야 <code>await</code>가 의도한 대로 동작합니다.</p>
+
+<p>일반적으로 <code>await</code>의 대상이 되는 비동기 처리 코드는 <a href="https://github.com/axios/axios">Axios</a> 등 프로미스를 반환하는 API 호출 함수입니다.</p>
+
+<h2 id="async--await-간단한-예제">async &amp; await 간단한 예제</h2>
+
+<p>그럼 문법을 좀 더 정확하게 이해하기 위해서 간단한 async await 코드를 보겠습니다.</p>
+
+<pre class="language-js code-toolbar"><code class=" language-js"><span class="token keyword keyword-function">function</span> <span class="token function">fetchItems</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword keyword-return">return</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token keyword keyword-function">function</span><span class="token punctuation">(</span>resolve<span class="token punctuation">,</span> reject<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-var">var</span> items <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token function">resolve</span><span class="token punctuation">(</span>items<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword keyword-async">async</span> <span class="token keyword keyword-function">function</span> <span class="token function">logItems</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword keyword-var">var</span> resultItems <span class="token operator">=</span> <span class="token keyword keyword-await">await</span> <span class="token function">fetchItems</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>resultItems<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// [1,2,3]</span>
+<span class="token punctuation">}</span>
+</code><div class="toolbar"><div class="toolbar-item"><span>Js</span></div><div class="toolbar-item"><a>Copy</a></div></div></pre>
+
+<p>먼저 <code>fetchItems()</code> 함수는 프로미스 객체를 반환하는 함수입니다. 프로미스는 “<a href="https://joshua1988.github.io/web-development/javascript/promise-for-beginners/#promise%EA%B0%80-%EB%AD%94%EA%B0%80%EC%9A%94">자바스크립트 비동기 처리를 위한 객체</a>“라고 배웠었죠. <code>fetchItems()</code> 함수를 실행하면 프로미스가 이행(Resolved)되며 결과 값은 <code>items</code> 배열이 됩니다.</p>
+
+<p>그리고 이제 <code>logItems()</code> 함수를 보겠습니다. <code>logItems()</code> 함수를 실행하면 <code>fetchItems()</code> 함수의 결과 값인 <code>items</code> 배열이 <code>resultItems</code> 변수에 담깁니다. 따라서, 콘솔에는 <code>[1,2,3]</code>이 출력되죠.</p>
+
+<p><code>await</code>를 사용하지 않았다면 데이터를 받아온 시점에 콘솔을 출력할 수 있게 콜백 함수나 <code>.then()</code>등을 사용해야 했을 겁니다. 하지만 async await 문법 덕택에 비동기에 대한 사고를 하지 않아도 되는 것이죠.</p>
+
+<p>※참고: 만약 위 코드가 왜 비동기 처리 코드인지 잘 이해가 안 가신다면 <code>fetchItems()</code>를 아래의 함수들로 바꿔서 실행해보셔도 괜찮습니다 :)</p>
+
+<pre class="language-js code-toolbar"><code class=" language-js"><span class="token comment" spellcheck="true">// HTTP 통신 동작을 모방한 코드</span>
+<span class="token keyword keyword-function">function</span> <span class="token function">fetchItems</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword keyword-return">return</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token keyword keyword-function">function</span><span class="token punctuation">(</span>resolve<span class="token punctuation">,</span> reject<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token keyword keyword-function">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword keyword-var">var</span> items <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+      <span class="token function">resolve</span><span class="token punctuation">(</span>items<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token number">3000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">// jQuery ajax 코드</span>
+<span class="token keyword keyword-function">function</span> <span class="token function">fetchItems</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword keyword-return">return</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token keyword keyword-function">function</span><span class="token punctuation">(</span>resolve<span class="token punctuation">,</span> reject<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    $<span class="token punctuation">.</span><span class="token function">ajax</span><span class="token punctuation">(</span><span class="token string">'domain.com/items'</span><span class="token punctuation">,</span> <span class="token keyword keyword-function">function</span><span class="token punctuation">(</span>response<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token function">resolve</span><span class="token punctuation">(</span>response<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code><div class="toolbar"><div class="toolbar-item"><span>Js</span></div><div class="toolbar-item"><a>Copy</a></div></div></pre>
+
+<h2 id="async--await-실용-예제">async &amp; await 실용 예제</h2>
+
+<p>async &amp; await 문법이 가장 빛을 발하는 순간은 여러 개의 비동기 처리 코드를 다룰 때입니다. 아래와 같이 각각 <em>사용자</em>와 <em>할 일 목록</em>을 받아오는 HTTP 통신 코드가 있다고 하겠습니다.</p>
+
+<pre class="language-js code-toolbar"><code class=" language-js"><span class="token keyword keyword-function">function</span> <span class="token function">fetchUser</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword keyword-var">var</span> url <span class="token operator">=</span> <span class="token string">'https://jsonplaceholder.typicode.com/users/1'</span>
+  <span class="token keyword keyword-return">return</span> <span class="token function">fetch</span><span class="token punctuation">(</span>url<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword keyword-function">function</span><span class="token punctuation">(</span>response<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-return">return</span> response<span class="token punctuation">.</span><span class="token function">json</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword keyword-function">function</span> <span class="token function">fetchTodo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword keyword-var">var</span> url <span class="token operator">=</span> <span class="token string">'https://jsonplaceholder.typicode.com/todos/1'</span><span class="token punctuation">;</span>
+  <span class="token keyword keyword-return">return</span> <span class="token function">fetch</span><span class="token punctuation">(</span>url<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword keyword-function">function</span><span class="token punctuation">(</span>response<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-return">return</span> response<span class="token punctuation">.</span><span class="token function">json</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code><div class="toolbar"><div class="toolbar-item"><span>Js</span></div><div class="toolbar-item"><a>Copy</a></div></div></pre>
+
+<p>위 함수들을 실행하면 각각 사용자 정보와 할 일 정보가 담긴 프로미스 객체가 반환됩니다.</p>
+
+<p>자 이제 이 두 함수를 이용하여 할 일 제목을 출력해보겠습니다.
+살펴볼 예제 코드의 로직은 아래와 같습니다.</p>
+
+<ol>
+  <li><code>fetchUser()</code>를 이용하여 사용자 정보 호출</li>
+  <li>받아온 사용자 아이디가 <code>1</code>이면 할 일 정보 호출</li>
+  <li>받아온 할 일 정보의 제목을 콘솔에 출력</li>
+</ol>
+
+<p>그럼 코드를 보겠습니다.</p>
+
+<pre class="language-js code-toolbar"><code class=" language-js"><span class="token keyword keyword-async">async</span> <span class="token keyword keyword-function">function</span> <span class="token function">logTodoTitle</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword keyword-var">var</span> user <span class="token operator">=</span> <span class="token keyword keyword-await">await</span> <span class="token function">fetchUser</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>user<span class="token punctuation">.</span>id <span class="token operator">===</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-var">var</span> todo <span class="token operator">=</span> <span class="token keyword keyword-await">await</span> <span class="token function">fetchTodo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>todo<span class="token punctuation">.</span>title<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// delectus aut autem</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code><div class="toolbar"><div class="toolbar-item"><span>Js</span></div><div class="toolbar-item"><a>Copy</a></div></div></pre>
+
+<p><code>logTodoTitle()</code>를 실행하면 콘솔에 <em>delectus aut autem</em>가 출력될 것입니다.
+위 비동기 처리 코드를 만약 콜백이나 프로미스로 했다면 훨씬 더 코드가 길어졌을 것이고 인덴팅 뿐만 아니라 가독성도 좋지 않았을 겁니다.
+이처럼 async await 문법을 이용하면 기존의 비동기 처리 코드 방식으로 사고하지 않아도 되는 장점이 생깁니다.</p>
+
+<p>※참고: 위 함수에서 사용한 <code>fetch()</code> API는 크롬과 같은 최신 브라우저에서만 동작합니다. 브라우저 지원 여부는 다음 링크로 확인해보세요. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API">fetch API 브라우저 지원표</a></p>
+
+<h2 id="async--await-예외-처리">async &amp; await 예외 처리</h2>
+
+<p>async &amp; await에서 예외를 처리하는 방법은 바로 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch">try catch</a>입니다. 프로미스에서 에러 처리를 위해 <code>.catch()</code>를 사용했던 것처럼 async에서는 <code>catch {}</code> 를 사용하시면 됩니다.</p>
+
+<p>조금 전 코드에 바로 <code>try catch</code> 문법을 적용해보겠습니다.</p>
+
+<pre class="language-js code-toolbar"><code class=" language-js"><span class="token keyword keyword-async">async</span> <span class="token keyword keyword-function">function</span> <span class="token function">logTodoTitle</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword keyword-try">try</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-var">var</span> user <span class="token operator">=</span> <span class="token keyword keyword-await">await</span> <span class="token function">fetchUser</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>user<span class="token punctuation">.</span>id <span class="token operator">===</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword keyword-var">var</span> todo <span class="token operator">=</span> <span class="token keyword keyword-await">await</span> <span class="token function">fetchTodo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>todo<span class="token punctuation">.</span>title<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// delectus aut autem</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span> <span class="token keyword keyword-catch">catch</span> <span class="token punctuation">(</span><span class="token class-name">error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>error<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code><div class="toolbar"><div class="toolbar-item"><span>Js</span></div><div class="toolbar-item"><a>Copy</a></div></div></pre>
+
+<p>위의 코드를 실행하다가 발생한 네트워크 통신 오류뿐만 아니라 간단한 타입 오류 등의 일반적인 오류까지도 <code>catch</code>로 잡아낼 수 있습니다. 발견된 에러는 <code>error</code> 객체에 담기기 때문에 에러의 유형에 맞게 에러 코드를 처리해주시면 됩니다.</p>
+
+<h2 id="마무리">마무리</h2>
+
+<p>여태까지 살펴본 내용으로 감을 좀 잡으셨나요? 늘 처음 보는 문법은 완전하게 이해하는데 시간이 필요합니다.
+실제로 서비스를 만드실 때 위 내용을 적용해보시면 더 쉽게 체득하실 수 있을거에요.</p>
+
+<p>앞으로 더 프런트엔드의 이벤트와 데이터 처리가 많아질 것이기 때문에 async await에 대해서 정확히 알아놓으시면 도움이 많이 되실 겁니다.
+그럼 재밌게 코딩하세요! 감사합니다 😄</p>
+
+<!-- ## async & await 레이스 컨디션
+
+## async & await 내부 구조 -->
+
+<h4 id="다른-시리즈물-확인하기">다른 시리즈물 확인하기</h4>
+
+<ul>
+  <li><a href="https://joshua1988.github.io/web-development/javascript/javascript-asynchronous-operation/">1탄 - 자바스크립트 비동기 처리와 콜백 함수</a></li>
+  <li><a href="https://joshua1988.github.io/web-development/javascript/promise-for-beginners/">2탄 - 자바스크립트 Promise 쉽게 이해하기</a></li>
+</ul>
+
+<h2 id="글보다-더-쉽게-배우는-온라인-강좌">글보다 더 쉽게 배우는 온라인 강좌</h2>
+
+<p>좀 더 친절하고 상세한 설명을 원하신다면 아래 강좌를 이용해보시는 것도 좋을 것 같아요 😄</p>
+
+<figure class="third">
+	<a href="https://www.inflearn.com/course/Age-of-Vuejs?inst=72986832&amp;utm_source=blog&amp;utm_medium=githubio&amp;utm_campaign=captianpangyo&amp;utm_term=banner" target="_blank"><img src="./자바스크립트 async와 await • 캡틴판교_files/lv1.png"></a>
+	<a href="https://www.inflearn.com/course/vue-pwa-vue-js-%EC%A4%91%EA%B8%89?inst=dd3b6c65&amp;utm_source=blog&amp;utm_medium=githubio&amp;utm_campaign=captianpangyo&amp;utm_term=banner" target="_blank"><img src="./자바스크립트 async와 await • 캡틴판교_files/lv2.png"></a>
+	<a href="https://www.inflearn.com/course/vue-js?inst=c76b3a50&amp;utm_source=blog&amp;utm_medium=githubio&amp;utm_campaign=captianpangyo&amp;utm_term=banner" target="_blank"><img src="./자바스크립트 async와 await • 캡틴판교_files/lv3.png"></a>
+	<figcaption>인프런 온라인 강의 : Vue.js 시작하기 / Vue.js 중급 / Vue.js 완벽 가이드</figcaption>
+</figure>
+
+<figure class="third">
+	<a href="https://www.inflearn.com/course/vue-js-%EB%81%9D%EB%82%B4%EA%B8%B0-%EC%BA%A1%ED%8B%B4%ED%8C%90%EA%B5%90?inst=2071ec73&amp;utm_source=blog&amp;utm_medium=githubio&amp;utm_campaign=captianpangyo&amp;utm_term=banner" target="_blank"><img src="./자바스크립트 async와 await • 캡틴판교_files/lv4.png"></a>
+	<a href="https://www.inflearn.com/course/%ED%94%84%EB%9F%B0%ED%8A%B8%EC%97%94%EB%93%9C-%EC%9B%B9%ED%8C%A9?inst=747606f7&amp;utm_source=blog&amp;utm_medium=githubio&amp;utm_campaign=captianpangyo&amp;utm_term=banner" target="_blank"><img src="./자바스크립트 async와 await • 캡틴판교_files/webpack.png"></a>
+	<a href="https://www.inflearn.com/course/pwa?utm_source=blog&amp;utm_medium=githubio&amp;utm_campaign=captianpangyo&amp;utm_term=banner" target="_blank"><img src="./자바스크립트 async와 await • 캡틴판교_files/pwa.jpg"></a>
+	<figcaption>인프런 온라인 강의 : Vue.js 끝장내기 / 프런트엔드 개발자를 위한 웹팩 / PWA 시작하기</figcaption>
+</figure>
+
+<figure class="third">
+	<a href="https://www.inflearn.com/course/%ED%83%80%EC%9E%85%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-%EC%9E%85%EB%AC%B8?inst=f1ae9299&amp;utm_source=blog&amp;utm_medium=githubio&amp;utm_campaign=captianpangyo&amp;utm_term=banner" target="_blank"><img src="./자바스크립트 async와 await • 캡틴판교_files/ts1.png"></a>
+  <a href="https://www.inflearn.com/course/%ED%83%80%EC%9E%85%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-%EC%8B%A4%EC%A0%84?inst=e5a8f85e&amp;utm_source=blog&amp;utm_medium=githubio&amp;utm_campaign=captianpangyo&amp;utm_term=banner" target="_blank"><img src="./자바스크립트 async와 await • 캡틴판교_files/ts2.png"></a>
+  <a href="https://www.inflearn.com/course/vue-ts?inst=0ced8395&amp;utm_source=blog&amp;utm_medium=githubio&amp;utm_campaign=captianpangyo&amp;utm_term=banner" target="_blank"><img src="./자바스크립트 async와 await • 캡틴판교_files/vue-ts.png"></a>
+	<figcaption>인프런 온라인 강의 : 타입스크립트 입문 / 실전 프로젝트로 배우는 타입스크립트 / Vue.js + TypeScript 완벽 가이드</figcaption>
+</figure>
+
+<figure class="third">
+	<a href="https://www.inflearn.com/course/%ED%83%80%EC%9E%85%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-%EC%9E%85%EB%AC%B8?inst=f1ae9299&amp;utm_source=blog&amp;utm_medium=githubio&amp;utm_campaign=captianpangyo&amp;utm_term=banner" target="_blank"><img src="./자바스크립트 async와 await • 캡틴판교_files/typescript-beginner-kor.png"></a>
+	<figcaption>인프런 온라인 강의 : 타입스크립트 입문</figcaption>
+</figure>
+
+<h2 id="이해가-잘-안되시나요-방송에서-직접-물어보세요-">이해가 잘 안되시나요? 방송에서 직접 물어보세요 :)</h2>
+
+<p>매주 토요일 오후 3시 30분에 유튜브 라이브 방송을 진행합니다. 프런트엔드 개발 관련해서 아무거나 여쭤보실 수 있으세요 :)</p>
+
+<p><a href="https://www.youtube.com/watch?v=fL39Yg2H0ig" target="_blank">프런트엔드 개발 상담소 바로가기</a></p>
+
+				
+				<hr>
+				<footer class="page-footer">
+					
+
+<div class="author-image">
+	<img src="./자바스크립트 async와 await • 캡틴판교_files/josh.png" alt="">
+</div><!-- ./author-image -->
+<div class="author-content">
+	<h3 class="author-name">작성자 <span itemprop="author"></span></h3>
+	<p class="author-bio">Captain Pangyo
+    <a href="https://www.facebook.com/CaptainPangyo"><i class="author-sns-icon author-sns-head-icon fa fa-facebook" aria-hidden="true"></i>
+    </a>
+    <a href="https://github.com/joshua1988"><i class="author-sns-icon fa fa-github" aria-hidden="true"></i>
+    </a>
+    <a href="https://www.linkedin.com/in/gihyojoshuajang/"><i class="author-sns-icon fa fa-linkedin" aria-hidden="true"></i>
+    </a>
+  </p>
+</div><!-- ./author-content -->
+
+					<div class="inline-btn">
+	<a class="btn-social facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://joshua1988.github.io/web-development/javascript/js-async-await/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i> 공유</a>
+	<a class="btn-social google-plus" href="https://plus.google.com/share?url=https://joshua1988.github.io/web-development/javascript/js-async-await/" target="_blank"><i class="fa fa-google-plus" aria-hidden="true"></i> 공유</a>
+	<a class="btn-social linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://joshua1988.github.io/web-development/javascript/js-async-await/&amp;title=%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%20async%EC%99%80%20await&amp;summary=&amp;source=CaptainPangyo" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i> 공유</a>
+	<a class="btn-social twitter" href="https://twitter.com/intent/tweet?text=%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%20async%EC%99%80%20await&amp;url=https://joshua1988.github.io/web-development/javascript/js-async-await/&amp;via=" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i> 공유</a>
+	<!-- <a class="btn-social chrome" href="#" id="pushBtn" target="_blank"><i class="fa fa-chrome" aria-hidden="true"></i> Push 구독</a> -->
+	<a class="btn-social rss" href="https://feedburner.google.com/fb/a/mailverify?uri=CaptainPangyo-Articles&amp;loc=en_US" target="_blank"><i class="fa fa-rss" aria-hidden="true"></i> 구독</a>
+</div><!-- /.share-this -->
+
+					<div class="page-meta">
+	<p>업데이트 되었음 <time datetime="2019-07-30T02:59:13Z" itemprop="datePublished">July 30, 2019</time></p>
+	<!-- <div class="push-notice">
+		글이 마음에 드셨다면 위 Push 구독 버튼으로 새 글을 푸시 알람으로 받아보세요. 웹 & 모바일 모두 지원됩니다.
+	</div> -->
+</div><!-- /.page-meta -->
+
+				</footer><!-- /.footer -->
+				<aside>
+					<hr>
+<div id="disqus_recommendations" style="margin-bottom: 12px;"><iframe id="dsq-app8411" name="dsq-app8411" allowtransparency="true" frameborder="0" scrolling="no" tabindex="0" title="Disqus" width="100%" src="./자바스크립트 async와 await • 캡틴판교_files/saved_resource.html" style="width: 100% !important; border: none !important; overflow: hidden !important; height: 271px !important; display: inline !important; box-sizing: border-box !important;" horizontalscrolling="no" verticalscrolling="no"></iframe></div><div id="disqus_thread"><iframe id="dsq-app126" name="dsq-app126" allowtransparency="true" frameborder="0" scrolling="no" tabindex="0" title="Disqus" width="100%" src="./자바스크립트 async와 await • 캡틴판교_files/saved_resource(1).html" style="width: 1px !important; min-width: 100% !important; border: none !important; overflow: hidden !important; height: 2110px !important;" horizontalscrolling="no" verticalscrolling="no"></iframe></div>
+<script type="text/javascript">
+	/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+	var disqus_shortname = 'captain-pangyo';
+
+	// var disqus_config = function () {
+	//   this.page.url = https://joshua1988.github.io
+	//   this.page.identifier = 'a unique identifier for each page where Disqus is present';
+	//   this.page.title = 자바스크립트 async와 await;
+  // };
+
+	/* * * DON'T EDIT BELOW THIS LINE * * */
+	(function() {
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+				</aside>
+				
+			</div><!-- /.content -->
+		</div><!-- /.inner-wrap -->
+		
+	</article><!-- ./wrap -->
+</div><!-- /#main -->
+
+      <!-- 이후에 페이지 네비게이션 관련 추가: page-nav-buttons.html -->
+      <footer role="contentinfo" id="site-footer">
+	<nav role="navigation" class="menu bottom-menu">
+		<ul class="menu-item">
+		
+      
+			<li><a href="https://joshua1988.github.io/tech/">Tech</a></li>
+		
+      
+			<li><a href="https://joshua1988.github.io/singing/">Singing</a></li>
+		
+      
+			<li><a href="https://joshua1988.github.io/life/">Life</a></li>
+		
+      
+			<li><a href="https://joshua1988.github.io/about/">About</a></li>
+		
+		</ul>
+	</nav><!-- /.bottom-menu -->
+	<p class="copyright">© 2022 <a href="https://joshua1988.github.io/">캡틴판교</a> powered by <a href="http://jekyllrb.com/" rel="nofollow">Jekyll</a></p>
+</footer>
+
+    </div>
+    <!-- FIXME: push 구현 후 permission-popup.html 추가 -->
+    <div class="popup-wrapper">
+  <div id="update-popup" class="popup">
+    <p class="text">신규 콘텐츠가 등록되었습니다 😄</p>
+    <div class="buttons">
+      <button id="refresh-btn">새로고침</button>
+    </div>
+  </div>
+</div>
+ <script>
+  (function () {
+    var newWorker;
+    var refreshing;
+    var popup = document.getElementById("update-popup");
+
+    function showUpdatePopup() {
+      popup.classList.add("show");
+    }
+
+    function closeUpdatePopup() {
+      popup.classList.remove("show");
+    }
+
+    var btn = document.getElementById("refresh-btn");
+    btn.addEventListener("click", function () {
+      newWorker.postMessage({ action: "skipWaiting" });
+      closeUpdatePopup();
+    });
+
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker
+          .getRegistrations()
+          .then(function (registrations) {
+            for (let registration of registrations) {
+              registration.unregister();
+            }
+          })
+          .catch(error => console.log(error));
+        // navigator.serviceWorker.register("/sw.js").then(function (reg) {
+        //   reg.addEventListener("updatefound", function () {
+        //     newWorker = reg.installing;
+        //     newWorker.addEventListener("statechange", function () {
+        //       // Has service worker state changed?
+        //       switch (newWorker.state) {
+        //         case "installed":
+        //           // There is a new service worker available, show the notification
+        //           if (navigator.serviceWorker.controller) {
+        //             showUpdatePopup();
+        //           }
+        //           break;
+        //       }
+        //     });
+        //   });
+        // });
+
+        // navigator.serviceWorker.addEventListener(
+        //   "controllerchange",
+        //   function () {
+        //     if (refreshing) {
+        //       return;
+        //     }
+        //     window.location.reload();
+        //     refreshing = true;
+        //   }
+        // );
+        // var originDomain = window.location.origin;
+        // var flag = /io\/$/i.test(location.href);
+
+        // if (!flag) {
+        //   navigator.serviceWorker.register(originDomain + '/sw.js').then(function(swReg) {
+        //     console.log('Service Worker is registered', swReg);
+
+        //     swRegistration = swReg;
+        //     initialiseUI();
+        //   }).catch(function(err) {
+        //     console.log('ServiceWorker registration failed: ', err);
+        //   });
+        // }
+      });
+    }
+  })();
+</script>
+
+    <script src="./자바스크립트 async와 await • 캡틴판교_files/jquery-1.9.1.min.js.다운로드"></script>
+    <script src="./자바스크립트 async와 await • 캡틴판교_files/main.js.다운로드"></script>
+    <!-- FIXME: push 구현 후 추가 -->
+    <!-- <script src="https://joshua1988.github.io/js/app.js"></script> -->
+    <script src="./자바스크립트 async와 await • 캡틴판교_files/clipboard.min.js.다운로드"></script>
+    <script src="./자바스크립트 async와 await • 캡틴판교_files/prism.js.다운로드"></script>
+    <script>
+      (function (i, s, o, g, r, a, m) {
+        i["GoogleAnalyticsObject"] = r;
+        (i[r] =
+          i[r] ||
+          function () {
+            (i[r].q = i[r].q || []).push(arguments);
+          }),
+          (i[r].l = 1 * new Date());
+        (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m);
+      })(
+        window,
+        document,
+        "script",
+        "https://www.google-analytics.com/analytics.js",
+        "ga"
+      );
+
+      ga("create", "UA-87965695-1", "auto");
+      ga("send", "pageview");
+    </script>
+    <script type="text/javascript">
+      (function (w, d, a) {
+        w.__beusablerumclient__ = {
+          load: function (src) {
+            var b = d.createElement("script");
+            b.src = src;
+            b.async = true;
+            b.type = "text/javascript";
+            d.getElementsByTagName("head")[0].appendChild(b);
+          },
+        };
+        w.__beusablerumclient__.load(a);
+      })(
+        window,
+        document,
+        "//rum.beusable.net/script/b201029e180539u283/0da836e543"
+      );
+    </script>
+  
+
+<iframe style="display: none;" src="./자바스크립트 async와 await • 캡틴판교_files/saved_resource(2).html"></iframe><iframe style="display: none;" src="./자바스크립트 async와 await • 캡틴판교_files/saved_resource(3).html"></iframe></body></html>

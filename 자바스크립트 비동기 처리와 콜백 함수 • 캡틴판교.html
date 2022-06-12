@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<!-- saved from url=(0090)https://joshua1988.github.io/web-development/javascript/javascript-asynchronous-operation/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="cleartype" content="on">
+    <!-- pwa -->
+    <link rel="icon" href="https://joshua1988.github.io/images/share_logo.png">
+    <meta name="theme-color" content="#343D57">
+    <!-- pwa - apple -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon" href="https://joshua1988.github.io/images/icons/152x.png">
+    <!-- pwa - ms -->
+    <meta name="msapplication-TileImage" content="https://joshua1988.github.io/images/icons/144x.png">
+    <meta name="msapplication-TileColor" content="#343D57">
+    <!-- Google Tag Manager -->
+    <script type="text/javascript" async="" src="./자바스크립트 비동기 처리와 콜백 함수 • 캡틴판교_files/analytics.js.다운로드"></script><script async="" src="./자바스크립트 비동기 처리와 콜백 함수 • 캡틴판교_files/analytics.js.다운로드"></script><script async="" src="./자바스크립트 비동기 처리와 콜백 함수 • 캡틴판교_files/gtm.js.다운로드"></script><script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-N86CL4S");
+    </script>
+    <!-- End Google Tag Manager -->
+    <title>
+      자바스크립트 비동기 처리와 콜백 함수 • 캡틴판교
+    </title>
+     
+    <meta name="description" content="(중급) 중급 자바스크립트 개발자가 되기 위한 자바스크립트 비동기 처리와 콜백 함수 이해하기. 콜백 지옥과 해결 방법 등">
+     
+    <meta name="keywords" content="자바스크립트, 자바스크립트 기초, 자바스크립트 기초 예제, 자바스크립트 문법, 자바스크립트 문법 정리, 자바스크립트 예제, 자바스크립트 함수, 자바스크립트란, 자바스크립트 기본, 자바스크립트 강좌, 자바스크립트 비동기, 자바스크립트 비동기 프로그래밍, 자바스크립트 비동기 함수, 콜백 함수, 자바스크립트 콜백 함수, 콜백 지옥, 자바스크립트 콜백 지옥, 자바스크립트 콜백함수 원리, 자바스크립트 입문, 자바스크립트 초급, 자바스크립트 시작하기, 자바스크립트 코딩 면접, javascript 코딩 면접, 자바스크립트 입문 책, 자바스크립트 서적, 캡틴판교, 장기효, 인프런, 패스트 캠퍼스">
+      		<!-- Facebook Open Graph -->
+		<meta property="og:locale" content="ko_KR">
+		<meta property="og:type" content="article">
+		<meta property="og:title" content="자바스크립트 비동기 처리와 콜백 함수">
+		<meta property="og:description" content="(중급) 중급 자바스크립트 개발자가 되기 위한 자바스크립트 비동기 처리와 콜백 함수 이해하기. 콜백 지옥과 해결 방법 등">
+		<meta property="og:url" content="https://joshua1988.github.io/web-development/javascript/javascript-asynchronous-operation/">
+		<meta property="og:site_name" content="캡틴판교">
+		
+			<meta property="og:image" content="https://joshua1988.github.io/images/posts/web/javascript/js.png">
+		
+		<meta property="og:image:secure_url" content="https://joshua1988.github.io/images/share_logo.png">
+
+		<!-- Twitter Cards -->
+		<meta name="twitter:title" content="자바스크립트 비동기 처리와 콜백 함수">
+		<meta name="twitter:description" content="(중급) 중급 자바스크립트 개발자가 되기 위한 자바스크립트 비동기 처리와 콜백 함수 이해하기. 콜백 지옥과 해결 방법 등">
+		
+		
+		
+		<meta name="twitter:card" content="summary">
+		<meta name="twitter:image" content="https://joshua1988.github.io/images/share_logo.png">
+
+		
+
+
+    <link rel="manifest" href="https://joshua1988.github.io/manifest.json">
+    <link rel="canonical" href="https://joshua1988.github.io/web-development/javascript/javascript-asynchronous-operation/">
+
+    <link href="https://joshua1988.github.io/atom.xml" type="application/atom+xml" rel="alternate" title="캡틴판교 Atom Feed">
+    <link rel="alternate" type="application/rss+xml" title="캡틴판교" href="https://joshua1988.github.io/atom.xml">
+    <link href="https://joshua1988.github.io/sitemap.xml" type="application/xml" rel="sitemap" title="Sitemap">
+    <link rel="stylesheet" href="./자바스크립트 비동기 처리와 콜백 함수 • 캡틴판교_files/main.css">
+    <style>
+      blockquote p {
+        line-height: 2;
+      }
+      @media screen and (max-width: 700px) {
+        blockquote p {
+          line-height: 1.5;
+        }
+      }
+    </style>
+    <link rel="stylesheet" href="./자바스크립트 비동기 처리와 콜백 함수 • 캡틴판교_files/prism.css">
+    <link rel="stylesheet" href="./자바스크립트 비동기 처리와 콜백 함수 • 캡틴판교_files/prism-nightowl.css">
+  <script type="text/javascript" async="" src="./자바스크립트 비동기 처리와 콜백 함수 • 캡틴판교_files/embed.js.다운로드"></script><script src="./자바스크립트 비동기 처리와 콜백 함수 • 캡틴판교_files/0da836e543" async="" type="text/javascript"></script><style id="fit-vids-style">.fluid-width-video-wrapper{width:100%;position:relative;padding:0;}.fluid-width-video-wrapper iframe,.fluid-width-video-wrapper object,.fluid-width-video-wrapper embed {position:absolute;top:0;left:0;width:100%;height:100%;}</style><script src="./자바스크립트 비동기 처리와 콜백 함수 • 캡틴판교_files/0da836e543(1)" async="" type="text/javascript"></script><link rel="prefetch" as="style" href="https://c.disquscdn.com/next/embed/styles/lounge.63860eb743c7d9d2adf0fa435788abe7.css"><link rel="prefetch" as="script" href="https://c.disquscdn.com/next/embed/common.bundle.33bc87b2c4f9324203cc85b7dd1d0492.js"><link rel="prefetch" as="script" href="https://c.disquscdn.com/next/embed/lounge.bundle.275044d1ea778800bd83f8337ba3d84e.js"><link rel="prefetch" as="script" href="https://disqus.com/next/config.js"><script async="" id="dsq_recs_scr" src="./자바스크립트 비동기 처리와 콜백 함수 • 캡틴판교_files/recommendations.js.다운로드"></script><link rel="prefetch" as="style" href="https://c.disquscdn.com/next/recommendations/styles/recommendations.10022a97346f1c6e3798931bbd8e4bb5.css"><link rel="prefetch" as="script" href="https://c.disquscdn.com/next/recommendations/common.bundle.a59fbd11efae764ccd959d61e4925fee.js"><link rel="prefetch" as="script" href="https://c.disquscdn.com/next/recommendations/recommendations.bundle.926bc472e4859a48daa346b4ba2ab4f4.js"><link rel="prefetch" as="script" href="https://disqus.com/next/config.js"></head>
+
+  <body id="js-body">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-N86CL4S"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe
+    ></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <!--[if lt IE 9]><div class="upgrade notice-warning"><strong>Your browser is quite old!</strong> Why not <a href="http://whatbrowser.org/">upgrade to a newer one</a> to better enjoy this site?</div><![endif]-->
+ <header id="masthead">
+  <div class="inner-wrap">
+    <a href="https://joshua1988.github.io/" class="site-title"><img src="./자바스크립트 비동기 처리와 콜백 함수 • 캡틴판교_files/2021-logo.png" alt="캡틴판교 로고" style="margin-top:-1rem;"></a>
+    <nav role="navigation" class="menu top-menu">
+        <ul class="menu-item">
+	<li class="home"><a href="https://joshua1988.github.io/">캡틴판교</a></li>
+	
+    
+		
+    	<li><a href="https://joshua1988.github.io/tech/">Tech</a></li>
+		
+  
+    
+		
+    	<li><a href="https://joshua1988.github.io/singing/">Singing</a></li>
+		
+  
+    
+		
+    	<li><a href="https://joshua1988.github.io/life/">Life</a></li>
+		
+  
+    
+		
+    	<li><a href="https://joshua1988.github.io/about/">About</a></li>
+		
+  
+    
+		
+  
+    
+		
+  
+    
+		
+  
+    
+		
+  
+    
+		
+  
+    
+		
+  
+    
+		
+  
+    
+		
+  
+    
+		
+  
+    
+		
+  
+    
+		
+  
+    
+		
+  
+</ul>
+
+    </nav>
+  </div><!-- /.inner-wrap -->
+</header><!-- /.masthead -->
+ <nav role="navigation" id="js-menu" class="sliding-menu-content" style="display: inherit;">
+  <h5>캡틴판교</h5>
+  <ul class="menu-item">
+    <!-- <li>
+      <a href="https://joshua1988.github.io/tech/">
+        
+        
+        <div class="title">Tech</div>
+        
+        <p class="excerpt">Useful information in Software Development</p>
+      </a>
+    </li><li>
+      <a href="https://joshua1988.github.io/singing/">
+        
+        
+        <div class="title">Singing</div>
+        
+        <p class="excerpt">Love to sing a song for people</p>
+      </a>
+    </li><li>
+      <a href="https://joshua1988.github.io/life/">
+        
+        
+        <p class="excerpt">Things we do in daily lives</p>
+      </a>
+    </li><li>
+      <a href="https://joshua1988.github.io/about/">
+        
+        
+        <div class="title">About</div>
+        
+        <p class="excerpt">Who is Captain Pangyo?</p>
+      </a>
+    </li><li>
+      <a href="https://joshua1988.github.io/pwa/">
+        
+        
+        
+      </a>
+    </li><li>
+      <a href="https://joshua1988.github.io/vuejs/">
+        
+        
+        
+      </a>
+    </li><li>
+      <a href="https://joshua1988.github.io/angular/">
+        
+        
+        
+      </a>
+    </li><li>
+      <a href="https://joshua1988.github.io/javascript/">
+        
+        
+        
+      </a>
+    </li><li>
+      <a href="https://joshua1988.github.io/css/">
+        
+        
+        
+      </a>
+    </li><li>
+      <a href="https://joshua1988.github.io/design/">
+        
+        
+        
+      </a>
+    </li><li>
+      <a href="https://joshua1988.github.io/web-perf/">
+        
+        
+        
+      </a>
+    </li><li>
+      <a href="https://joshua1988.github.io/amp/">
+        
+        
+        
+      </a>
+    </li><li>
+      <a href="https://joshua1988.github.io/opinions/">
+        
+        
+        
+      </a>
+    </li><li>
+      <a href="https://joshua1988.github.io/translation/">
+        
+        
+        
+      </a>
+    </li><li>
+      <a href="https://joshua1988.github.io/web-development/">
+        
+        
+        <p class="excerpt"></p>
+      </a>
+    </li><li>
+      <a href="https://joshua1988.github.io/webpack/">
+        
+        
+        <p class="excerpt"></p>
+      </a>
+    </li> -->
+
+    
+      
+      <a href="https://joshua1988.github.io/tech/">
+        <div class="title">Tech</div>
+        
+        </a><li><a href="https://joshua1988.github.io/tech/">
+          
+            
+            
+            </a><a href="https://joshua1988.github.io/web-development" class="excerpt" name="web-development">web-development (60)</a>
+            
+            
+          
+            
+            
+            <a href="https://joshua1988.github.io/web-perf" class="excerpt" name="web-perf">web-perf (1)</a>
+            
+            
+          
+            
+            
+            
+          
+            
+            
+            <a href="https://joshua1988.github.io/angular" class="excerpt" name="angular">angular (1)</a>
+            
+            
+          
+            
+            
+            <a href="https://joshua1988.github.io/javascript" class="excerpt" name="javascript">javascript (14)</a>
+            
+            
+          
+            
+            
+            <a href="https://joshua1988.github.io/pwa" class="excerpt" name="pwa">pwa (4)</a>
+            
+            
+          
+            
+            
+            <a href="https://joshua1988.github.io/amp" class="excerpt" name="amp">amp (1)</a>
+            
+            
+          
+            
+            
+            <a href="https://joshua1988.github.io/translation" class="excerpt" name="translation">translation (9)</a>
+            
+            
+          
+            
+            
+            <a href="https://joshua1988.github.io/vuejs" class="excerpt" name="vuejs">vuejs (16)</a>
+            
+            
+          
+            
+          
+            
+            
+            <a href="https://joshua1988.github.io/opinions" class="excerpt" name="opinions">opinions (5)</a>
+            
+            
+          
+            
+            
+            <a href="https://joshua1988.github.io/webpack" class="excerpt" name="webpack">webpack (3)</a>
+            
+            
+          
+            
+            
+            <a href="https://joshua1988.github.io/english" class="excerpt" name="english">english (1)</a>
+            
+            
+          
+            
+            
+            <a href="https://joshua1988.github.io/css" class="excerpt" name="css">css (1)</a>
+            
+            
+          
+            
+            
+            <a href="https://joshua1988.github.io/npm" class="excerpt" name="npm">npm (1)</a>
+            
+            
+          
+            
+            
+            <a href="https://joshua1988.github.io/design" class="excerpt" name="design">design (1)</a>
+            
+            
+          
+            
+            
+            <a href="https://joshua1988.github.io/interview" class="excerpt" name="interview">interview (1)</a>
+            
+            
+          
+            
+            
+            <a href="https://joshua1988.github.io/life" class="excerpt" name="life">life (1)</a>
+            
+            
+          
+        </li>
+        
+      
+      
+    
+      
+      <a href="https://joshua1988.github.io/singing/">
+        <div class="title">Singing</div>
+        
+          <li>
+            <p class="excerpt">Love to sing a song for people</p>
+          </li>
+        
+      </a>
+      
+    
+      
+    
+      
+      <a href="https://joshua1988.github.io/about/">
+        <div class="title">About</div>
+        
+          <li>
+            <p class="excerpt">Who is Captain Pangyo?</p>
+          </li>
+        
+      </a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </ul>
+</nav>
+<button type="button" id="js-menu-trigger" class="sliding-menu-button lines-button x2" role="button" aria-label="Toggle Navigation">
+  <span class="nav-lines"></span>
+</button>
+
+<div id="js-menu-screen" class="menu-screen"></div>
+
+
+    <div id="page-wrapper">
+      <div id="main" role="main">
+	<article class="wrap" itemscope="" itemtype="http://schema.org/Article">
+		
+		
+  <nav class="breadcrumbs">
+    <span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="https://joshua1988.github.io/" itemprop="url">
+        <span itemprop="title">Home</span>
+      </a> › 
+    <span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="https://joshua1988.github.io/web-development/" itemprop="url">
+        <span itemprop="title">Web development</span>
+      </a>
+    </span>
+  </span></nav><!-- /.breadcrumbs -->
+
+		<div class="page-title">
+			<h1>자바스크립트 비동기 처리와 콜백 함수</h1>
+		</div>
+		<div class="inner-wrap">
+			<div id="content" class="page-content" itemprop="articleBody">
+				<nav class="toc">
+<ul id="markdown-toc"><li><h6>목차</h6></li>
+  <li><a href="https://joshua1988.github.io/web-development/javascript/javascript-asynchronous-operation/#%EB%93%A4%EC%96%B4%EA%B0%80%EB%A9%B0" id="markdown-toc-들어가며">들어가며</a></li>
+  <li><a href="https://joshua1988.github.io/web-development/javascript/javascript-asynchronous-operation/#%EB%B9%84%EB%8F%99%EA%B8%B0-%EC%B2%98%EB%A6%AC-%EA%B7%B8%EA%B2%8C-%EB%AD%94%EA%B0%80%EC%9A%94" id="markdown-toc-비동기-처리-그게-뭔가요">비동기 처리? 그게 뭔가요?</a></li>
+  <li><a href="https://joshua1988.github.io/web-development/javascript/javascript-asynchronous-operation/#%EB%B9%84%EB%8F%99%EA%B8%B0-%EC%B2%98%EB%A6%AC%EC%9D%98-%EC%B2%AB-%EB%B2%88%EC%A7%B8-%EC%82%AC%EB%A1%80" id="markdown-toc-비동기-처리의-첫-번째-사례">비동기 처리의 첫 번째 사례</a></li>
+  <li><a href="https://joshua1988.github.io/web-development/javascript/javascript-asynchronous-operation/#%EB%B9%84%EB%8F%99%EA%B8%B0-%EC%B2%98%EB%A6%AC%EC%9D%98-%EB%91%90-%EB%B2%88%EC%A7%B8-%EC%82%AC%EB%A1%80" id="markdown-toc-비동기-처리의-두-번째-사례">비동기 처리의 두 번째 사례</a></li>
+  <li><a href="https://joshua1988.github.io/web-development/javascript/javascript-asynchronous-operation/#%EC%BD%9C%EB%B0%B1-%ED%95%A8%EC%88%98%EB%A1%9C-%EB%B9%84%EB%8F%99%EA%B8%B0-%EC%B2%98%EB%A6%AC-%EB%B0%A9%EC%8B%9D%EC%9D%98-%EB%AC%B8%EC%A0%9C%EC%A0%90-%ED%95%B4%EA%B2%B0%ED%95%98%EA%B8%B0" id="markdown-toc-콜백-함수로-비동기-처리-방식의-문제점-해결하기">콜백 함수로 비동기 처리 방식의 문제점 해결하기</a></li>
+  <li><a href="https://joshua1988.github.io/web-development/javascript/javascript-asynchronous-operation/#%EB%B9%84%EC%9C%A0%EB%A1%9C-%EC%9D%B4%ED%95%B4%ED%95%98%EB%8A%94-%EC%BD%9C%EB%B0%B1-%ED%95%A8%EC%88%98-%EB%8F%99%EC%9E%91-%EB%B0%A9%EC%8B%9D" id="markdown-toc-비유로-이해하는-콜백-함수-동작-방식">비유로 이해하는 콜백 함수 동작 방식</a></li>
+  <li><a href="https://joshua1988.github.io/web-development/javascript/javascript-asynchronous-operation/#%EC%BD%9C%EB%B0%B1-%EC%A7%80%EC%98%A5-callback-hell" id="markdown-toc-콜백-지옥-callback-hell">콜백 지옥 (Callback hell)</a></li>
+  <li><a href="https://joshua1988.github.io/web-development/javascript/javascript-asynchronous-operation/#%EC%BD%9C%EB%B0%B1-%EC%A7%80%EC%98%A5%EC%9D%84-%ED%95%B4%EA%B2%B0%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95" id="markdown-toc-콜백-지옥을-해결하는-방법">콜백 지옥을 해결하는 방법</a></li>
+  <li><a href="https://joshua1988.github.io/web-development/javascript/javascript-asynchronous-operation/#%EB%A7%88%EB%AC%B4%EB%A6%AC" id="markdown-toc-마무리">마무리</a></li>
+  <li><a href="https://joshua1988.github.io/web-development/javascript/javascript-asynchronous-operation/#%EA%B8%80%EB%B3%B4%EB%8B%A4-%EB%8D%94-%EC%89%BD%EA%B2%8C-%EB%B0%B0%EC%9A%B0%EB%8A%94-%EC%98%A8%EB%9D%BC%EC%9D%B8-%EA%B0%95%EC%A2%8C" id="markdown-toc-글보다-더-쉽게-배우는-온라인-강좌">글보다 더 쉽게 배우는 온라인 강좌</a></li>
+  <li><a href="https://joshua1988.github.io/web-development/javascript/javascript-asynchronous-operation/#%EC%9D%B4%ED%95%B4%EA%B0%80-%EC%9E%98-%EC%95%88%EB%90%98%EC%8B%9C%EB%82%98%EC%9A%94-%EB%B0%A9%EC%86%A1%EC%97%90%EC%84%9C-%EC%A7%81%EC%A0%91-%EB%AC%BC%EC%96%B4%EB%B3%B4%EC%84%B8%EC%9A%94-" id="markdown-toc-이해가-잘-안되시나요-방송에서-직접-물어보세요-">이해가 잘 안되시나요? 방송에서 직접 물어보세요 :)</a></li>
+</ul>
+
+</nav>
+
+<h2 id="들어가며">들어가며</h2>
+<p>얼마 전 수강생 한 분에게 Promise에 대해서 잘 설명된 글이나 예제 코드를 공유해달라고 요청받았습니다.
+영어로는 잘 정리된 글이 많은데 한글로 쉽게 설명된 글을 찾아드리려고 하니 생각보다 자료가 많지 않더라구요.
+그래서 Promise를 정리하기 위해 글을 쓰기 시작했습니다.</p>
+
+<p><em>‘Promise는 자바스크립트 비동기 처리에 사용되는 객체’</em> 라는 첫 소개 문구를 쓰고 보니
+비동기 처리가 뭔지 궁금해하시는 분들이 많을 것 같았습니다. 그래서 이번 글은 자바스크립트 비동기 처리에 대해서 적어봤습니다.
+자바스크립트가 비동기 처리를 하는 이유, 비동기 처리를 유연하게 하기 위한 콜백 함수, 콜백 함수 지옥 등
+이번 글에서 Promise를 왜 사용해야 되는지에 대해 감을 잡고 나면 <a href="https://joshua1988.github.io/web-development/javascript/promise-for-beginners/">다음 편으로 연재할 Promise 글</a>을 재밌게 읽으실 수 있을거에요 :)</p>
+
+<p>그럼 오늘도 Happy Coding!</p>
+
+<h2 id="비동기-처리-그게-뭔가요">비동기 처리? 그게 뭔가요?</h2>
+<p>자바스크립트의 비동기 처리란 특정 코드의 연산이 끝날 때까지 코드의 실행을 멈추지 않고
+다음 코드를 먼저 실행하는 자바스크립트의 특성을 의미합니다.</p>
+
+<h2 id="비동기-처리의-첫-번째-사례">비동기 처리의 첫 번째 사례</h2>
+<p>비동기 처리의 가장 흔한 사례는 제이쿼리의 ajax입니다.
+제이쿼리로 실제 웹 서비스를 개발할 때 ajax 통신을 빼놓을 수가 없습니다.
+보통 화면에 표시할 이미지나 데이터를 서버에서 불러와 표시해야 하는데 이때
+ajax 통신으로 해당 데이터를 서버로부터 가져올 수 있기 때문입니다.</p>
+
+<p>그럼 ajax 코드를 잠깐 살펴보겠습니다.</p>
+
+<pre class="language-js code-toolbar"><code class=" language-js"><span class="token keyword keyword-function">function</span> <span class="token function">getData</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token keyword keyword-var">var</span> tableData<span class="token punctuation">;</span>
+	$<span class="token punctuation">.</span><span class="token keyword keyword-get">get</span><span class="token punctuation">(</span><span class="token string">'https://domain.com/products/1'</span><span class="token punctuation">,</span> <span class="token keyword keyword-function">function</span><span class="token punctuation">(</span>response<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		tableData <span class="token operator">=</span> response<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword keyword-return">return</span> tableData<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">getData</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// undefined</span>
+</code><div class="toolbar"><div class="toolbar-item"><span>Js</span></div><div class="toolbar-item"><a>Copy</a></div></div></pre>
+
+<p>여기서 <code>$.get()</code>이 ajax 통신을 하는 부분입니다. <code>https://domain.com</code> 에다가 HTTP GET 요청을 날려
+1번 상품(product) 정보를 요청하는 코드죠. 좀 더 쉽게 말하면 지정된 URL에
+‘데이터를 하나 보내주세요’ 라는 요청을 날리는 것과 같습니다.</p>
+
+<p>그렇게 서버에서 받아온 데이터는 <code>response</code> 인자에 담깁니다. 그리고 <code>tableData = response;</code> 코드로
+받아온 데이터를 <code>tableData</code>라는 변수에 저장합니다. 그럼 이제 이 getData()를 호출하면 어떻게 될까요?
+받아온 데이터가 뭐든 일단 뭔가 찍혀야겠죠. 근데 결과는 맨 아래에서 보시는 것처럼 undefined입니다.
+왜 그럴까요?</p>
+
+<p>그 이유는 <code>$.get()</code>로 데이터를 요청하고 받아올 때까지 기다려주지 않고
+다음 코드인 <code>return tableData;</code>를 실행했기 때문입니다. 따라서, getData()의 결과 값은
+초기 값을 설정하지 않은 tableData의 값 undefined를 출력합니다.</p>
+
+<p><strong>이렇게 특정 로직의 실행이 끝날 때까지 기다려주지 않고 나머지 코드를 먼저 실행하는 것이 비동기 처리입니다.</strong>
+자바스크립트에서 비동기 처리가 필요한 이유를 생각해보면, 화면에서 서버로 데이터를 요청했을 때 서버가 언제
+그 요청에 대한 응답을 줄지도 모르는데 마냥 다른 코드를 실행 안 하고 기다릴 순 없기 때문입니다.
+위에선 간단한 요청 1개만 보냈는데 만약 100개 보낸다고 생각해보세요. 비동기 처리가 아니고 동기 처리라면
+코드 실행하고 기다리고, 실행하고 기다리고.. 아마 웹 애플리케이션을 실행하는데 수십 분은 걸릴 겁니다.</p>
+
+<h2 id="비동기-처리의-두-번째-사례">비동기 처리의 두 번째 사례</h2>
+<p>또 다른 비동기 처리 사례는 setTimeout()입니다. setTimeout()은 Web API의 한 종류입니다.
+코드를 바로 실행하지 않고 지정한 시간만큼 기다렸다가 로직을 실행합니다. 아래 코드를 보겠습니다.</p>
+
+<pre class="language-js code-toolbar"><code class=" language-js"><span class="token comment" spellcheck="true">// #1</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Hello'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// #2</span>
+<span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token keyword keyword-function">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Bye'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token number">3000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// #3</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Hello Again'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code><div class="toolbar"><div class="toolbar-item"><span>Js</span></div><div class="toolbar-item"><a>Copy</a></div></div></pre>
+
+<p>비동기 처리에 대한 이해가 없는 상태에서 위 코드를 보면 아마 다음과 같은 결과값이 나올 거라고 생각할 겁니다.</p>
+<ul>
+  <li>‘Hello’ 출력</li>
+  <li>3초 있다가 ‘Bye’ 출력</li>
+  <li>‘Hello Again’ 출력</li>
+</ul>
+
+<p>그런데 실제 결과 값은 아래와 같이 나오죠.</p>
+<ul>
+  <li>‘Hello’ 출력</li>
+  <li>‘Hello Again’ 출력</li>
+  <li>3초 있다가 ‘Bye’ 출력</li>
+</ul>
+
+<p>setTimeout() 역시 비동기 방식으로 실행되기 때문에 3초를 기다렸다가 다음 코드를 수행하는 것이 아니라
+일단 setTimeout()을 실행하고 나서 바로 다음 코드인 <code>console.log('Hello Again');</code>으로 넘어갔습니다.
+따라서, ‘Hello’, ‘Hello Again’를 먼저 출력하고 3초가 지나면 ‘Bye’가 출력됩니다.</p>
+
+<h2 id="콜백-함수로-비동기-처리-방식의-문제점-해결하기">콜백 함수로 비동기 처리 방식의 문제점 해결하기</h2>
+<p>앞에서 자바스크립트 비동기 처리 방식에 의해 야기될 수 있는 문제들을 살펴봤습니다.
+이러한 문제들은 어떻게 해결할 수 있을까요? 바로 콜백(callback) 함수를 이용하는 것입니다.
+앞에서 살펴본 ajax 통신 코드를 콜백 함수로 개선해보겠습니다.</p>
+
+<pre class="language-js code-toolbar"><code class=" language-js"><span class="token keyword keyword-function">function</span> <span class="token function">getData</span><span class="token punctuation">(</span>callbackFunc<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	$<span class="token punctuation">.</span><span class="token keyword keyword-get">get</span><span class="token punctuation">(</span><span class="token string">'https://domain.com/products/1'</span><span class="token punctuation">,</span> <span class="token keyword keyword-function">function</span><span class="token punctuation">(</span>response<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token function">callbackFunc</span><span class="token punctuation">(</span>response<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 서버에서 받은 데이터 response를 callbackFunc() 함수에 넘겨줌</span>
+	<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token function">getData</span><span class="token punctuation">(</span><span class="token keyword keyword-function">function</span><span class="token punctuation">(</span>tableData<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>tableData<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// $.get()의 response 값이 tableData에 전달됨</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code><div class="toolbar"><div class="toolbar-item"><span>Js</span></div><div class="toolbar-item"><a>Copy</a></div></div></pre>
+
+<p>이렇게 콜백 함수를 사용하면 특정 로직이 끝났을 때 원하는 동작을 실행시킬 수 있습니다.</p>
+
+<h2 id="비유로-이해하는-콜백-함수-동작-방식">비유로 이해하는 콜백 함수 동작 방식</h2>
+<p>콜백 함수의 동작 방식은 일종의 식당 자리 예약과 같습니다. 일반적으로 맛집을 가면 사람이 많아 자리가 없습니다.
+그래서 대기자 명단에 이름을 쓴 다음에 자리가 날 때까지 주변 식당을 돌아다니죠.
+만약 식당에서 자리가 생기면 전화로 자리가 났다고 연락이 옵니다. 그 전화를 받는 시점이
+여기서의 콜백 함수가 호출되는 시점과 같습니다. 손님 입장에서는 자리가 날 때까지 식당에서
+기다리지 않고 근처 가게에서 잠깐 쇼핑을 할 수도 있고 아니면 다른 식당 자리를 알아볼 수도 있습니다.</p>
+
+<p>자리가 났을 때만 연락이 오기 때문에 미리 가서 기다릴 필요도 없고, 직접 식당 안에 들어가서
+자리가 비어 있는지 확인할 필요도 없습니다. 자리가 준비된 시점, 즉 데이터가 준비된 시점에서만
+저희가 원하는 동작(자리에 앉는다, 특정 값을 출력한다 등)을 수행할 수 있습니다.</p>
+
+<h2 id="콜백-지옥-callback-hell">콜백 지옥 (Callback hell)</h2>
+<p>콜백 지옥은 비동기 처리 로직을 위해 콜백 함수를 연속해서 사용할 때 발생하는 문제입니다.
+아마 아래와 같은 코드를 본 적이 있을 겁니다.</p>
+
+<pre class="language-js code-toolbar"><code class=" language-js">$<span class="token punctuation">.</span><span class="token keyword keyword-get">get</span><span class="token punctuation">(</span><span class="token string">'url'</span><span class="token punctuation">,</span> <span class="token keyword keyword-function">function</span><span class="token punctuation">(</span>response<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token function">parseValue</span><span class="token punctuation">(</span>response<span class="token punctuation">,</span> <span class="token keyword keyword-function">function</span><span class="token punctuation">(</span>id<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token function">auth</span><span class="token punctuation">(</span>id<span class="token punctuation">,</span> <span class="token keyword keyword-function">function</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			<span class="token function">display</span><span class="token punctuation">(</span>result<span class="token punctuation">,</span> <span class="token keyword keyword-function">function</span><span class="token punctuation">(</span>text<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+				console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>text<span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code><div class="toolbar"><div class="toolbar-item"><span>Js</span></div><div class="toolbar-item"><a>Copy</a></div></div></pre>
+
+<p>웹 서비스를 개발하다 보면 서버에서 데이터를 받아와 화면에 표시하기까지
+인코딩, 사용자 인증 등을 처리해야 하는 경우가 있습니다.
+만약 이 모든 과정을 비동기로 처리해야 한다고 하면 위와 같이 콜백 안에 콜백을 계속 무는 형식으로
+코딩을 하게 됩니다. 이러한 코드 구조는 가독성도 떨어지고 로직을 변경하기도 어렵습니다.
+이와 같은 코드 구조를 콜백 지옥이라고 합니다.</p>
+
+<h2 id="콜백-지옥을-해결하는-방법">콜백 지옥을 해결하는 방법</h2>
+<p>일반적으로 콜백 지옥을 해결하는 방법에는 Promise나 Async를 사용하는 방법이 있습니다.
+만약 코딩 패턴으로만 콜백 지옥을 해결하려면 아래와 같이 각 콜백 함수를 분리해주면 됩니다.</p>
+
+<pre class="language-js code-toolbar"><code class=" language-js"><span class="token keyword keyword-function">function</span> <span class="token function">parseValueDone</span><span class="token punctuation">(</span>id<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token function">auth</span><span class="token punctuation">(</span>id<span class="token punctuation">,</span> authDone<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword keyword-function">function</span> <span class="token function">authDone</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token function">display</span><span class="token punctuation">(</span>result<span class="token punctuation">,</span> displayDone<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword keyword-function">function</span> <span class="token function">displayDone</span><span class="token punctuation">(</span>text<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>text<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+$<span class="token punctuation">.</span><span class="token keyword keyword-get">get</span><span class="token punctuation">(</span><span class="token string">'url'</span><span class="token punctuation">,</span> <span class="token keyword keyword-function">function</span><span class="token punctuation">(</span>response<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token function">parseValue</span><span class="token punctuation">(</span>response<span class="token punctuation">,</span> parseValueDone<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code><div class="toolbar"><div class="toolbar-item"><span>Js</span></div><div class="toolbar-item"><a>Copy</a></div></div></pre>
+
+<p>위 코드는 앞의 콜백 지옥 예시를 개선한 코드입니다. 중첩해서 선언했던 콜백 익명 함수를 각각의 함수로 구분하였습니다.
+정리된 코드를 간단하게 살펴보겠습니다. 먼저 ajax 통신으로 받은 데이터를 parseValue() 메서드로 파싱 합니다.
+parseValueDone()에 파싱 한 결과값인 id가 전달되고 auth() 메서드가 실행됩니다.
+auth() 메서드로 인증을 거치고 나면 콜백 함수 authDone()이 실행됩니다. 인증 결과 값인 result로 display()를 호출하면
+마지막으로 displayDone() 메서드가 수행되면서 text가 콘솔에 출력됩니다.</p>
+
+<h2 id="마무리">마무리</h2>
+
+<p>위와 같은 코딩 패턴으로도 콜백 지옥을 해결할 수 있지만 Promise나 Async를 이용하면
+더 편하게 구현할 수 있습니다. 다음 글에서는 Promise에 대해서 알아보겠습니다.</p>
+
+<h4 id="다음-시리즈물-확인하기">다음 시리즈물 확인하기</h4>
+
+<ul>
+  <li><a href="https://joshua1988.github.io/web-development/javascript/promise-for-beginners/">2탄 - 자바스크립트 Promise 쉽게 이해하기</a></li>
+  <li><a href="https://joshua1988.github.io/web-development/javascript/js-async-await/">3탄 - 자바스크립트 async와 await</a></li>
+</ul>
+
+<h2 id="글보다-더-쉽게-배우는-온라인-강좌">글보다 더 쉽게 배우는 온라인 강좌</h2>
+
+<p>좀 더 친절하고 상세한 설명을 원하신다면 아래 강좌를 이용해보시는 것도 좋을 것 같아요 😄</p>
+
+<figure class="third">
+	<a href="https://www.inflearn.com/course/Age-of-Vuejs?inst=72986832&amp;utm_source=blog&amp;utm_medium=githubio&amp;utm_campaign=captianpangyo&amp;utm_term=banner" target="_blank"><img src="./자바스크립트 비동기 처리와 콜백 함수 • 캡틴판교_files/lv1.png"></a>
+	<a href="https://www.inflearn.com/course/vue-pwa-vue-js-%EC%A4%91%EA%B8%89?inst=dd3b6c65&amp;utm_source=blog&amp;utm_medium=githubio&amp;utm_campaign=captianpangyo&amp;utm_term=banner" target="_blank"><img src="./자바스크립트 비동기 처리와 콜백 함수 • 캡틴판교_files/lv2.png"></a>
+	<a href="https://www.inflearn.com/course/vue-js?inst=c76b3a50&amp;utm_source=blog&amp;utm_medium=githubio&amp;utm_campaign=captianpangyo&amp;utm_term=banner" target="_blank"><img src="./자바스크립트 비동기 처리와 콜백 함수 • 캡틴판교_files/lv3.png"></a>
+	<figcaption>인프런 온라인 강의 : Vue.js 시작하기 / Vue.js 중급 / Vue.js 완벽 가이드</figcaption>
+</figure>
+
+<figure class="third">
+	<a href="https://www.inflearn.com/course/vue-js-%EB%81%9D%EB%82%B4%EA%B8%B0-%EC%BA%A1%ED%8B%B4%ED%8C%90%EA%B5%90?inst=2071ec73&amp;utm_source=blog&amp;utm_medium=githubio&amp;utm_campaign=captianpangyo&amp;utm_term=banner" target="_blank"><img src="./자바스크립트 비동기 처리와 콜백 함수 • 캡틴판교_files/lv4.png"></a>
+	<a href="https://www.inflearn.com/course/%ED%94%84%EB%9F%B0%ED%8A%B8%EC%97%94%EB%93%9C-%EC%9B%B9%ED%8C%A9?inst=747606f7&amp;utm_source=blog&amp;utm_medium=githubio&amp;utm_campaign=captianpangyo&amp;utm_term=banner" target="_blank"><img src="./자바스크립트 비동기 처리와 콜백 함수 • 캡틴판교_files/webpack.png"></a>
+	<a href="https://www.inflearn.com/course/pwa?utm_source=blog&amp;utm_medium=githubio&amp;utm_campaign=captianpangyo&amp;utm_term=banner" target="_blank"><img src="./자바스크립트 비동기 처리와 콜백 함수 • 캡틴판교_files/pwa.jpg"></a>
+	<figcaption>인프런 온라인 강의 : Vue.js 끝장내기 / 프런트엔드 개발자를 위한 웹팩 / PWA 시작하기</figcaption>
+</figure>
+
+<figure class="third">
+	<a href="https://www.inflearn.com/course/%ED%83%80%EC%9E%85%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-%EC%9E%85%EB%AC%B8?inst=f1ae9299&amp;utm_source=blog&amp;utm_medium=githubio&amp;utm_campaign=captianpangyo&amp;utm_term=banner" target="_blank"><img src="./자바스크립트 비동기 처리와 콜백 함수 • 캡틴판교_files/ts1.png"></a>
+  <a href="https://www.inflearn.com/course/%ED%83%80%EC%9E%85%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-%EC%8B%A4%EC%A0%84?inst=e5a8f85e&amp;utm_source=blog&amp;utm_medium=githubio&amp;utm_campaign=captianpangyo&amp;utm_term=banner" target="_blank"><img src="./자바스크립트 비동기 처리와 콜백 함수 • 캡틴판교_files/ts2.png"></a>
+  <a href="https://www.inflearn.com/course/vue-ts?inst=0ced8395&amp;utm_source=blog&amp;utm_medium=githubio&amp;utm_campaign=captianpangyo&amp;utm_term=banner" target="_blank"><img src="./자바스크립트 비동기 처리와 콜백 함수 • 캡틴판교_files/vue-ts.png"></a>
+	<figcaption>인프런 온라인 강의 : 타입스크립트 입문 / 실전 프로젝트로 배우는 타입스크립트 / Vue.js + TypeScript 완벽 가이드</figcaption>
+</figure>
+
+<figure class="third">
+	<a href="https://www.inflearn.com/course/%ED%83%80%EC%9E%85%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-%EC%9E%85%EB%AC%B8?inst=f1ae9299&amp;utm_source=blog&amp;utm_medium=githubio&amp;utm_campaign=captianpangyo&amp;utm_term=banner" target="_blank"><img src="./자바스크립트 비동기 처리와 콜백 함수 • 캡틴판교_files/typescript-beginner-kor.png"></a>
+	<figcaption>인프런 온라인 강의 : 타입스크립트 입문</figcaption>
+</figure>
+
+<h2 id="이해가-잘-안되시나요-방송에서-직접-물어보세요-">이해가 잘 안되시나요? 방송에서 직접 물어보세요 :)</h2>
+
+<p>매주 토요일 오후 3시 30분에 유튜브 라이브 방송을 진행합니다. 프런트엔드 개발 관련해서 아무거나 여쭤보실 수 있으세요 :)</p>
+
+<p><a href="https://www.youtube.com/watch?v=fL39Yg2H0ig" target="_blank">프런트엔드 개발 상담소 바로가기</a></p>
+
+				
+				<hr>
+				<footer class="page-footer">
+					
+
+<div class="author-image">
+	<img src="./자바스크립트 비동기 처리와 콜백 함수 • 캡틴판교_files/josh.png" alt="">
+</div><!-- ./author-image -->
+<div class="author-content">
+	<h3 class="author-name">작성자 <span itemprop="author"></span></h3>
+	<p class="author-bio">Captain Pangyo
+    <a href="https://www.facebook.com/CaptainPangyo"><i class="author-sns-icon author-sns-head-icon fa fa-facebook" aria-hidden="true"></i>
+    </a>
+    <a href="https://github.com/joshua1988"><i class="author-sns-icon fa fa-github" aria-hidden="true"></i>
+    </a>
+    <a href="https://www.linkedin.com/in/gihyojoshuajang/"><i class="author-sns-icon fa fa-linkedin" aria-hidden="true"></i>
+    </a>
+  </p>
+</div><!-- ./author-content -->
+
+					<div class="inline-btn">
+	<a class="btn-social facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://joshua1988.github.io/web-development/javascript/javascript-asynchronous-operation/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i> 공유</a>
+	<a class="btn-social google-plus" href="https://plus.google.com/share?url=https://joshua1988.github.io/web-development/javascript/javascript-asynchronous-operation/" target="_blank"><i class="fa fa-google-plus" aria-hidden="true"></i> 공유</a>
+	<a class="btn-social linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://joshua1988.github.io/web-development/javascript/javascript-asynchronous-operation/&amp;title=%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%20%EB%B9%84%EB%8F%99%EA%B8%B0%20%EC%B2%98%EB%A6%AC%EC%99%80%20%EC%BD%9C%EB%B0%B1%20%ED%95%A8%EC%88%98&amp;summary=&amp;source=CaptainPangyo" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i> 공유</a>
+	<a class="btn-social twitter" href="https://twitter.com/intent/tweet?text=%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%20%EB%B9%84%EB%8F%99%EA%B8%B0%20%EC%B2%98%EB%A6%AC%EC%99%80%20%EC%BD%9C%EB%B0%B1%20%ED%95%A8%EC%88%98&amp;url=https://joshua1988.github.io/web-development/javascript/javascript-asynchronous-operation/&amp;via=" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i> 공유</a>
+	<!-- <a class="btn-social chrome" href="#" id="pushBtn" target="_blank"><i class="fa fa-chrome" aria-hidden="true"></i> Push 구독</a> -->
+	<a class="btn-social rss" href="https://feedburner.google.com/fb/a/mailverify?uri=CaptainPangyo-Articles&amp;loc=en_US" target="_blank"><i class="fa fa-rss" aria-hidden="true"></i> 구독</a>
+</div><!-- /.share-this -->
+
+					<div class="page-meta">
+	<p>업데이트 되었음 <time datetime="2018-02-06T08:54:13Z" itemprop="datePublished">February 06, 2018</time></p>
+	<!-- <div class="push-notice">
+		글이 마음에 드셨다면 위 Push 구독 버튼으로 새 글을 푸시 알람으로 받아보세요. 웹 & 모바일 모두 지원됩니다.
+	</div> -->
+</div><!-- /.page-meta -->
+
+				</footer><!-- /.footer -->
+				<aside>
+					<hr>
+<div id="disqus_recommendations" style="margin-bottom: 12px;"><iframe id="dsq-app9597" name="dsq-app9597" allowtransparency="true" frameborder="0" scrolling="no" tabindex="0" title="Disqus" width="100%" src="./자바스크립트 비동기 처리와 콜백 함수 • 캡틴판교_files/saved_resource.html" style="width: 100% !important; border: none !important; overflow: hidden !important; height: 271px !important; display: inline !important; box-sizing: border-box !important;" horizontalscrolling="no" verticalscrolling="no"></iframe></div><div id="disqus_thread"><iframe id="dsq-app9669" name="dsq-app9669" allowtransparency="true" frameborder="0" scrolling="no" tabindex="0" title="Disqus" width="100%" src="./자바스크립트 비동기 처리와 콜백 함수 • 캡틴판교_files/saved_resource(1).html" style="width: 1px !important; min-width: 100% !important; border: none !important; overflow: hidden !important; height: 1467px !important;" horizontalscrolling="no" verticalscrolling="no"></iframe></div>
+<script type="text/javascript">
+	/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+	var disqus_shortname = 'captain-pangyo';
+
+	// var disqus_config = function () {
+	//   this.page.url = https://joshua1988.github.io
+	//   this.page.identifier = 'a unique identifier for each page where Disqus is present';
+	//   this.page.title = 자바스크립트 비동기 처리와 콜백 함수;
+  // };
+
+	/* * * DON'T EDIT BELOW THIS LINE * * */
+	(function() {
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+				</aside>
+				
+			</div><!-- /.content -->
+		</div><!-- /.inner-wrap -->
+		
+	</article><!-- ./wrap -->
+</div><!-- /#main -->
+
+      <!-- 이후에 페이지 네비게이션 관련 추가: page-nav-buttons.html -->
+      <footer role="contentinfo" id="site-footer">
+	<nav role="navigation" class="menu bottom-menu">
+		<ul class="menu-item">
+		
+      
+			<li><a href="https://joshua1988.github.io/tech/">Tech</a></li>
+		
+      
+			<li><a href="https://joshua1988.github.io/singing/">Singing</a></li>
+		
+      
+			<li><a href="https://joshua1988.github.io/life/">Life</a></li>
+		
+      
+			<li><a href="https://joshua1988.github.io/about/">About</a></li>
+		
+		</ul>
+	</nav><!-- /.bottom-menu -->
+	<p class="copyright">© 2022 <a href="https://joshua1988.github.io/">캡틴판교</a> powered by <a href="http://jekyllrb.com/" rel="nofollow">Jekyll</a></p>
+</footer>
+
+    </div>
+    <!-- FIXME: push 구현 후 permission-popup.html 추가 -->
+    <div class="popup-wrapper">
+  <div id="update-popup" class="popup">
+    <p class="text">신규 콘텐츠가 등록되었습니다 😄</p>
+    <div class="buttons">
+      <button id="refresh-btn">새로고침</button>
+    </div>
+  </div>
+</div>
+ <script>
+  (function () {
+    var newWorker;
+    var refreshing;
+    var popup = document.getElementById("update-popup");
+
+    function showUpdatePopup() {
+      popup.classList.add("show");
+    }
+
+    function closeUpdatePopup() {
+      popup.classList.remove("show");
+    }
+
+    var btn = document.getElementById("refresh-btn");
+    btn.addEventListener("click", function () {
+      newWorker.postMessage({ action: "skipWaiting" });
+      closeUpdatePopup();
+    });
+
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker
+          .getRegistrations()
+          .then(function (registrations) {
+            for (let registration of registrations) {
+              registration.unregister();
+            }
+          })
+          .catch(error => console.log(error));
+        // navigator.serviceWorker.register("/sw.js").then(function (reg) {
+        //   reg.addEventListener("updatefound", function () {
+        //     newWorker = reg.installing;
+        //     newWorker.addEventListener("statechange", function () {
+        //       // Has service worker state changed?
+        //       switch (newWorker.state) {
+        //         case "installed":
+        //           // There is a new service worker available, show the notification
+        //           if (navigator.serviceWorker.controller) {
+        //             showUpdatePopup();
+        //           }
+        //           break;
+        //       }
+        //     });
+        //   });
+        // });
+
+        // navigator.serviceWorker.addEventListener(
+        //   "controllerchange",
+        //   function () {
+        //     if (refreshing) {
+        //       return;
+        //     }
+        //     window.location.reload();
+        //     refreshing = true;
+        //   }
+        // );
+        // var originDomain = window.location.origin;
+        // var flag = /io\/$/i.test(location.href);
+
+        // if (!flag) {
+        //   navigator.serviceWorker.register(originDomain + '/sw.js').then(function(swReg) {
+        //     console.log('Service Worker is registered', swReg);
+
+        //     swRegistration = swReg;
+        //     initialiseUI();
+        //   }).catch(function(err) {
+        //     console.log('ServiceWorker registration failed: ', err);
+        //   });
+        // }
+      });
+    }
+  })();
+</script>
+
+    <script src="./자바스크립트 비동기 처리와 콜백 함수 • 캡틴판교_files/jquery-1.9.1.min.js.다운로드"></script>
+    <script src="./자바스크립트 비동기 처리와 콜백 함수 • 캡틴판교_files/main.js.다운로드"></script>
+    <!-- FIXME: push 구현 후 추가 -->
+    <!-- <script src="https://joshua1988.github.io/js/app.js"></script> -->
+    <script src="./자바스크립트 비동기 처리와 콜백 함수 • 캡틴판교_files/clipboard.min.js.다운로드"></script>
+    <script src="./자바스크립트 비동기 처리와 콜백 함수 • 캡틴판교_files/prism.js.다운로드"></script>
+    <script>
+      (function (i, s, o, g, r, a, m) {
+        i["GoogleAnalyticsObject"] = r;
+        (i[r] =
+          i[r] ||
+          function () {
+            (i[r].q = i[r].q || []).push(arguments);
+          }),
+          (i[r].l = 1 * new Date());
+        (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m);
+      })(
+        window,
+        document,
+        "script",
+        "https://www.google-analytics.com/analytics.js",
+        "ga"
+      );
+
+      ga("create", "UA-87965695-1", "auto");
+      ga("send", "pageview");
+    </script>
+    <script type="text/javascript">
+      (function (w, d, a) {
+        w.__beusablerumclient__ = {
+          load: function (src) {
+            var b = d.createElement("script");
+            b.src = src;
+            b.async = true;
+            b.type = "text/javascript";
+            d.getElementsByTagName("head")[0].appendChild(b);
+          },
+        };
+        w.__beusablerumclient__.load(a);
+      })(
+        window,
+        document,
+        "//rum.beusable.net/script/b201029e180539u283/0da836e543"
+      );
+    </script>
+  
+
+<iframe style="display: none;" src="./자바스크립트 비동기 처리와 콜백 함수 • 캡틴판교_files/saved_resource(2).html"></iframe><iframe style="display: none;" src="./자바스크립트 비동기 처리와 콜백 함수 • 캡틴판교_files/saved_resource(3).html"></iframe></body></html>

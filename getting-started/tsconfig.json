@@ -1,0 +1,8 @@
+{
+    "complierOptions": {
+        "allowJs": true,
+        "checkJs": true,
+        "noImplicitAny":true
+    }
+}
+
