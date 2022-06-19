@@ -71,18 +71,106 @@
 	```
 2. 명시적인 `any` 선언하기
 	- `tsconfig.json` 파일에 `noImplicitAny` 값을 `true`로 추가
+
+3. 점진적인 타입 적용을 위한 프로젝트 환경 구성
+- [ ] 프로젝트 라이브러리 설치
+```
+npm i -D @babel/core @babel/preset-env @babel/preset-typescript @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint prettier eslint-plugin-prettier
+```
+- [ ] ESLint 설정 후 ESLint 플러그인 에러 해결
+	- project 폴더 밑에 .eslintrc.js 파일생성
+	- 저장 후 app.ts 에 보이지 않던 에러 보이기 시작한다.
+	- ESLint 플러그인 옵션설정
+		- VSCode 에서 ctrl + shipt + p (mac은 cmd + shift + p) 키를 이용하여 명령어 실행창 열기
+		- 명령어 실행 창에 open setting (JSON) 선택
+			- VSCode 에서 기본적으로 설정 된 것 이외에 사용자가 임의로 어떤 단축키를 쓰고 싶어, 어떤 밑줄을 쳐주고 싶어 할때 사용하는 파일
+			- 실제로 settings 를 열어서(ctrl + , / cmd + ,) 설정한 각각의 옵션 들이 모두 들어가 있는 파일이다.(settings.json)
+	- settings 를 열어서(ctrl + , / cmd + ,) format on save 검색 하여 Editor: Format on save 체크 해제 해 준다.
+		- 체크를 해제 해야 ESLint 에서 정리하는 파일과 다른 formatter 과 기타 formattion 도구들이 정리하는 코드들이 충돌이 일어나지 않는다.
+	- 최종설정 확인
+		- app.ts 에 가서 var a=10; 해서 저장하면 const a = 10; 간격도 띄워주고 알아서 바꿔준다. ESLint 에서 자동으로 정리해 주는 기능이다.
+
+```
+
+// .eslintrc.js 파일내용 그대로 복사하면 된다.
+// 강의 노트에서 일부 수정 useTabs: true, tabWidth: 4, endOfLine: 'auto'
+module.exports = {
+	root: true,
+	env: {
+		browser: true,
+		node: true,
+	},
+	extends: [
+		'eslint:recommended',
+		'plugin:@typescript-eslint/eslint-recommended',
+		'plugin:@typescript-eslint/recommended',
+	],
+	plugins: ['prettier', '@typescript-eslint'],
+	rules: {
+		'prettier/prettier': [
+			'error',
+			{
+				singleQuote: true,
+				semi: true,
+				useTabs: true,
+				tabWidth: 4,
+				printWidth: 80,
+				bracketSpacing: true,
+				arrowParens: 'avoid',
+				endOfLine: 'auto',
+			},
+		],
+	},
+	parserOptions: {
+		parser: '@typescript-eslint/parser',
+	},
+};
+
+```
+```
+// settings.json 제일 아래에 추가 한다.
+"editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+  },
+  "eslint.alwaysShowStatus": true,
+  "eslint.workingDirectories": [
+      {"mode": "auto"}
+  ],
+  "eslint.validate": [
+      "javascript",
+      "typescript"
+  ],
+
+```
 ## Tip
 - TS 오류 발생시 오류 코드를 활용하거나 중요문장을 COPY 하여 구글에서 검색 한다.
 - 이미 React, vue 등 다른 front-end framework를 썼을때, 이미 빌드 시스템이 들어가 있는 프로게트인 경우에는
 여러가지 방법으로 진행 해 볼 수 있다. 여기서 타입스크립트를 적용하는 경우에는 복잡해 질 수 있다.
 이때는 아예 프로젝트를 하나 새로 만들어서(타입스크립트 기본환경을 만들어서) 기존에 있는 소스코드들을 하나씩 들고 와서 입히는 것이 좋다.
 - 처음 부터 무리하게 구체적인 타입을 정의하지 말고, 일단은 `noImplicitAny : true` 로 인해 에러나는 부분은 최대한 `any` 로 정의를 한다.
+- 잘못된 라이브러리 제거 (npm uninstall 라이브러리) 현재 typescript 는 devDependencies 에 설치되어야 하나 dependencies 에 설치
+따라서 npm uninstall typescript 후 재 설치 한다. dependencies 는 어플리케이션 로직에 직접적으로 관여하는 jQuery, chart Library, react, vue 가 들어간다.
+devDenpencies 는 개발 할 때만 써는 라이브러리가 들어간다. 즉 배포할때 포함되는 라이브러리는 dependencies 에, 포함 안되는 라이브러리는 devDenpendencies 에 
+들어가면 된다.
 ## 참고 자료
 
 - [존스 홉킨스 코로나 현황](https://www.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6)
 - [Postman API](https://documenter.getpostman.com/view/10808728/SzS8rjbc?version=latest#27454960-ea1c-4b91-a0b6-0468bb4e6712)
 - [Type Vue without Typescript](https://blog.usejournal.com/type-vue-without-typescript-b2b49210f0b)
 - [tsc CLI Option](https://www.typescriptlang.org/docs/handbook/compiler-options.html)
+- [모듈화 진행을 위한 타입스크립트 구성](https://github.com/joshua1988/learn-typescript/tree/master/setup)
+- [NPM 설치 명령어 차이점](https://joshua1988.github.io/webpack-guide/build/npm-module-install.html##npm-설치-명령어)
+- [개발용 라이브러리와 배포용 라이브러리 구분하기](https://joshua1988.github.io/webpack-guide/build/npm-module-install.#개발용-라이브러리와-배포용-라이브러리-구분하기)
+
+## 라이브러리 소개
+- 바벨(Babel)
+	- 최신 JavaScript 문법을 좀 더 많은 브라우져가 호환할 수 있는 형태로 바꿔 주는 도구 이다.
+	- [바벨 공식 문서](https://babeljs.io/)
+		- Try it out 에서 테스트 해 보면 된다.
+	- [바벨 소개 문서](https://babeljs.io/docs/en/)
+	- [바벨 구성하기 문서](https://babeljs.io/docs/en/configuration)
+	- [바벨 프리셋 문서](https://babeljs.io/docs/en/presets)
+	- [babel-preset-env 깃헙 리포지토리](https://github.com/babel/babel-preset-env)
 
 ## 기타
 - node 로 javascript 실행하기 : 해당 js 파일이 있는 폴더 이동 > 통합터미널 열기 > 명령어 실행(node js파일명) 예) node arrow-function.js

@@ -87,3 +87,5 @@
 // es6 참조 : https://joshua1988.github.io/vue-camp/textbook.html
 
 // 화살표함수 MDN 문서 : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions
+
+// 모듈화 진행을 위한 타입스크립트 구성 : https://github.com/joshua1988/learn-typescript/tree/master/setup
