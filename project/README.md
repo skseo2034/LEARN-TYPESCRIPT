@@ -5,6 +5,8 @@
 
 ...
 ## 자바스크립트 프로젝트에 타입스크립트 적용하기
+- 참조 링크
+	-  [모듈화 진행을 위한 타입스크립트 구성](https://github.com/joshua1988/learn-typescript/tree/master/setup)
 
 0. 자바 스크립트 파일에 JSDoc으로 타입 시스템 입히기
 1. 타입스크립트 프로젝트 생성 : 우리는 이미 생성된 프로젝트로 함으로 실제로는 타입스크립트 기본 환경 구성 이 맞다.
@@ -89,6 +91,10 @@ npm i -D @babel/core @babel/preset-env @babel/preset-typescript @typescript-esli
 		- 체크를 해제 해야 ESLint 에서 정리하는 파일과 다른 formatter 과 기타 formattion 도구들이 정리하는 코드들이 충돌이 일어나지 않는다.
 	- 최종설정 확인
 		- app.ts 에 가서 var a=10; 해서 저장하면 const a = 10; 간격도 띄워주고 알아서 바꿔준다. ESLint 에서 자동으로 정리해 주는 기능이다.
+	- .eslintignore 파일 생성
+	- 참고
+		- ESLint 를 Typescript 에 사용하는 이유 TSLint 가 있는데도 그것을사용 하지 않고 사용하는 이유는
+			- 성능이슈 즉, TSLint 보다 ESLint 가 성능이 좋다 라고 Typescript 개발팀에서 결론을 내서 그 이후로 계속 사용하고 하고 있다.
 
 ```
 
@@ -142,6 +148,10 @@ module.exports = {
   ],
 
 ```
+```
+// .eslintignore 파일 내용.
+node_modules
+```
 ## Tip
 - TS 오류 발생시 오류 코드를 활용하거나 중요문장을 COPY 하여 구글에서 검색 한다.
 - 이미 React, vue 등 다른 front-end framework를 썼을때, 이미 빌드 시스템이 들어가 있는 프로게트인 경우에는
@@ -175,6 +185,12 @@ devDenpencies 는 개발 할 때만 써는 라이브러리가 들어간다. 즉 
 	- [ESLint 공식 문서](https://eslint.org/)
 	- Javascript 코드에서 문제를 찾고, 고치는 도구, 잠재적인 에러 가능성을 코드 레벨에서 줄여 주는 코드 문법 보조 도구.
 	- 코드의 자동완성 또는 포맷을 정돈해 주는 용도로도 사용한다.
+- Prettier 소개
+	- [Prettier 공식 문서](https://prettier.io/)
+	- 어떤 규칙을 가지고 코드를 정리해 주는 코드 정리 도구, 개인의 취향 대로 정리할 수 있다.
+	- 팀단위 코딩 컨벤션을 만들어서 컨벤션에 맞춰 코드를 정의할 때 많이 사용 된다.
+	- 실전에서도 Prettier 을 설정해 놓고, 안해 놓고의 차이는 나중에 가면 가독성의 차이가 어마어마 하게 난다.
+	- 실전에서 가급적 세팅하는 것을 추천 한다.
 ## 기타
 - node 로 javascript 실행하기 : 해당 js 파일이 있는 폴더 이동 > 통합터미널 열기 > 명령어 실행(node js파일명) 예) node arrow-function.js
 - 파일형식 중 . 은 숨김파일이고, *rc 이면 설정파일을 의미한다. 설정파일은 js, yml, json 확장자를 가질수 있다. js 주석처리가 자유로워서 개인적으로 선호 한다.
