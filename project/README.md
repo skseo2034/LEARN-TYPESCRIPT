@@ -171,6 +171,11 @@ devDenpencies 는 개발 할 때만 써는 라이브러리가 들어간다. 즉 
 	- [바벨 구성하기 문서](https://babeljs.io/docs/en/configuration)
 	- [바벨 프리셋 문서](https://babeljs.io/docs/en/presets)
 	- [babel-preset-env 깃헙 리포지토리](https://github.com/babel/babel-preset-env)
-
+- ESLint 소게
+	- [ESLint 공식 문서](https://eslint.org/)
+	- Javascript 코드에서 문제를 찾고, 고치는 도구, 잠재적인 에러 가능성을 코드 레벨에서 줄여 주는 코드 문법 보조 도구.
+	- 코드의 자동완성 또는 포맷을 정돈해 주는 용도로도 사용한다.
 ## 기타
 - node 로 javascript 실행하기 : 해당 js 파일이 있는 폴더 이동 > 통합터미널 열기 > 명령어 실행(node js파일명) 예) node arrow-function.js
+- 파일형식 중 . 은 숨김파일이고, *rc 이면 설정파일을 의미한다. 설정파일은 js, yml, json 확장자를 가질수 있다. js 주석처리가 자유로워서 개인적으로 선호 한다.
+	- 예) .eslintrc.js, .babelrc.js 등
