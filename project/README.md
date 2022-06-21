@@ -73,6 +73,7 @@
 	```
 2. 명시적인 `any` 선언하기
 	- `tsconfig.json` 파일에 `noImplicitAny` 값을 `true`로 추가
+	- 가능한한 구체적인 타입으로 타입정의
 
 3. 점진적인 타입 적용을 위한 프로젝트 환경 구성
 - [ ] 프로젝트 라이브러리 설치
@@ -152,6 +153,19 @@ module.exports = {
 // .eslintignore 파일 내용.
 node_modules
 ```
+4. 외부 라이브러리 모둘화
+	- index.html 에서 아래 부분이 외부 모듈이다.
+	```
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+	```
+	- 서비스코드 즉 app.ts 에서 import 하면 된다.
+	```
+	라이브러리 로딩 문법 : import 변수명 from '라이브러리 이름'
+	이렇게 하기 위해서는 라이브러리를 설치해야 한다.
+
+	 변수, 함수 임포트 문법 : import {} from '파일 상대 경로'
+	```
 ## Tip
 - TS 오류 발생시 오류 코드를 활용하거나 중요문장을 COPY 하여 구글에서 검색 한다.
 - 이미 React, vue 등 다른 front-end framework를 썼을때, 이미 빌드 시스템이 들어가 있는 프로게트인 경우에는
