@@ -166,6 +166,31 @@ node_modules
 
 	 변수, 함수 임포트 문법 : import {} from '파일 상대 경로'
 	```
+	- 외부 라이브러리 설치
+		- axios 설치
+			- npm i axios
+				- 없이 설치(--save-dev) 즉, depencies 에 설치
+			- 설치 후 소스상에서 (app.ts)
+				- import axios from 'axios' 할수 있다. 자동완성된다. depencies에 설치 했으므로	
+	```
+	// package.json 에 추가된 모습
+	  "dependencies": {
+    "axios": "^0.27.2"
+  }		
+	```
+			- [Axios 깃헙 리포지토리](https://github.com/axios/axios)
+		- chart.js 설치
+			- [Chart.js 공식 문서](https://www.chartjs.org/)
+			- npm i chart.js
+	```
+	// package.json 에 추가된 모습
+	"dependencies": {
+		"axios": "^0.27.2",
+		"chart.js": "^3.8.0"
+	}
+	```
+			- 설치 후 소스상에서 (app.ts)
+				- import Chart from 'chart.js' 할수 있다. 자동완성된다. depencies에 설치 했으므로				
 ## Tip
 - TS 오류 발생시 오류 코드를 활용하거나 중요문장을 COPY 하여 구글에서 검색 한다.
 - 이미 React, vue 등 다른 front-end framework를 썼을때, 이미 빌드 시스템이 들어가 있는 프로게트인 경우에는
