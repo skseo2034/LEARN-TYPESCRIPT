@@ -210,6 +210,15 @@ devDenpencies 는 개발 할 때만 써는 라이브러리가 들어간다. 즉 
 - [모듈화 진행을 위한 타입스크립트 구성](https://github.com/joshua1988/learn-typescript/tree/master/setup)
 - [NPM 설치 명령어 차이점](https://joshua1988.github.io/webpack-guide/build/npm-module-install.html##npm-설치-명령어)
 - [개발용 라이브러리와 배포용 라이브러리 구분하기](https://joshua1988.github.io/webpack-guide/build/npm-module-install.#개발용-라이브러리와-배포용-라이브러리-구분하기)
+- [Definitely Typed 깃헙 리포지토리](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/README.ko.md)
+	- The repository for high quality TypeScript type definitions.
+	- 고품질 TypeScript 유형 정의들을 이 저장소에 모아 놓았다.
+	- 여때까지 무수히 많은 javascript 라이브러리 들이 커뮤니티에 배포 되었고, 그것으로 많은 개발이 이루어졌다.
+		- 그렇게 했을때 그 javascript 라이브러리들을 Typescript 에서 인식 할 수 있게 할려면, 중간에 Type 정의를 해 주어야 한다.
+		- 쓸때마다 개발자 정의하는 경우 비용이 많이 든다.(시간, 노력 등) 그런것들은 잘 만들어진 형태로 오픈소스화 해 놓은 곳이 Definitely Typed 깃헙 리포지토리 이다.
+		- 대부분 types 에 @ 이가 들어가면(@types) 그게 다 Definitely Typed 아래로 정의 되어 있는 타입핑 라이브러리라 보면 된다.
+- [타입 정의가 제공되는 오픈소스 라이브러리 검색 사이트(타입스크립트 공식 사이트)](https://www.typescriptlang.org/dt/search?search=)
+	- 타입 선언이 되어 있는 npm package 를 찾아 주는 사이트
 
 ## 라이브러리 소개
 - 바벨(Babel)
