@@ -172,25 +172,47 @@ node_modules
 				- 없이 설치(--save-dev) 즉, depencies 에 설치
 			- 설치 후 소스상에서 (app.ts)
 				- import axios from 'axios' 할수 있다. 자동완성된다. depencies에 설치 했으므로	
-	```
-	// package.json 에 추가된 모습
-	  "dependencies": {
-    "axios": "^0.27.2"
-  }		
-	```
+					```
+					// package.json 에 추가된 모습
+					"dependencies": {
+						"axios": "^0.27.2"
+					}		
+					```
 			- [Axios 깃헙 리포지토리](https://github.com/axios/axios)
 		- chart.js 설치
 			- [Chart.js 공식 문서](https://www.chartjs.org/)
 			- npm i chart.js
-	```
-	// package.json 에 추가된 모습
-	"dependencies": {
-		"axios": "^0.27.2",
-		"chart.js": "^3.8.0"
-	}
-	```
+				```
+				// package.json 에 추가된 모습
+				"dependencies": {
+					"axios": "^0.27.2",
+					"chart.js": "^3.8.0"
+				}
+				```
 			- 설치 후 소스상에서 (app.ts)
-				- import Chart from 'chart.js' 할수 있다. 자동완성된다. depencies에 설치 했으므로				
+				- import Chart from 'chart.js' 할수 있다. 자동완성된다. depencies에 설치 했으므로
+
+	- 타입 선언 라이브러리가 제공되지 않는 외부 라이브러리 대체 방법
+		- @types 에서 찾을 수 없는 라이브러리
+		- 재현 해 보기
+			- 재현을 위해 chart.js 설치 제거 : npm uninstall chart.js
+			- tsconfig.json 에 typeRoots 설정 추가
+				- Default 는 node_modules/@types 이다. 즉 여기를 뒤져서 index.d.ts 를 다 들고 온다.
+				- 지금은 없으니 추가로 하나 더 설정한다.
+					```
+					"typeRoots": ["./node_modules/@types", "./types"]
+					```
+			- project 폴더 하위에 types 폴더를 만들고, 그 아래 chart.js 폴더를 만든다.
+				- chart.js 폴더에 index.d.ts 파일을 추가 한다.
+				- index.d.ts 파일에
+					```
+					 declare module 'chart.js'
+					```
+					코드를 추가 하면, app.ts 에서
+					```
+					 import { Chart } from 'chart.js';
+					```
+					에 오류가 나지 않는다. chart.js 에서 바로가기를 해 보면 types > chart.js > index.d.ts 파일을 참조함을 알 수 있다.							
 ## Tip
 - TS 오류 발생시 오류 코드를 활용하거나 중요문장을 COPY 하여 구글에서 검색 한다.
 - 이미 React, vue 등 다른 front-end framework를 썼을때, 이미 빌드 시스템이 들어가 있는 프로게트인 경우에는
@@ -201,6 +223,9 @@ node_modules
 따라서 npm uninstall typescript 후 재 설치 한다. dependencies 는 어플리케이션 로직에 직접적으로 관여하는 jQuery, chart Library, react, vue 가 들어간다.
 devDenpencies 는 개발 할 때만 써는 라이브러리가 들어간다. 즉 배포할때 포함되는 라이브러리는 dependencies 에, 포함 안되는 라이브러리는 devDenpendencies 에 
 들어가면 된다.
+- 개발시 비즈니스로직 application을 실행시키는 코드와 타입을 정의하는 코드를 분리하는게 좋다.
+	- 도메인 별로 폴더를 만들어서 사용하면 된다. 여기에서는 covid 퐅더에 index.ts를 만들었다.
+
 ## 참고 자료
 
 - [존스 홉킨스 코로나 현황](https://www.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6)
