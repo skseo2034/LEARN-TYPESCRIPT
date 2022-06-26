@@ -8,7 +8,9 @@ import axios, { AxiosResponse } from 'axios';
 // import * as Chart from 'chart.js';
 import { Chart } from 'chart.js';
 // 타입모듈
-import { CovidSummaryResponse } from './covid/index'
+import { CountrySummaryResponse, CovidSummaryResponse } from './covid/index';
+// enum
+import { CovidStauts } from './covid/index';
 
 // utils
 function $(selector: string) {
@@ -60,15 +62,10 @@ function fetchCovidSummary(): Promise<AxiosResponse<CovidSummaryResponse>> {
 	return axios.get(url);
 }
 
-fetchCovidSummary().then(res => res.data.)
-
-enum CovidStauts {
-	Confirmed = 'confirmed',
-	Recovered = 'recovered',
-	Deaths = 'deaths',
-}
-
-function fetchCountryInfo(countryCode: string, status: CovidStauts) {
+function fetchCountryInfo(
+	countryCode: string,
+	status: CovidStauts
+): Promise<AxiosResponse<CountrySummaryResponse>> {
 	// status params: confirmed, recovered, deaths
 	const url = `https://api.covid19api.com/country/${countryCode}/status/${status}`;
 	return axios.get(url);
