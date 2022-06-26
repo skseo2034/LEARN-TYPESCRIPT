@@ -1,6 +1,6 @@
 // 타입들을 모아 놓은 파일.
 // covid 라고 하는 api의 어떤 특정도메인 또는 데이터 구분, 데이터 종류들을 모아 놓은 파일 임.
-interface Country {
+export interface Country {
 	Country: string;
 	CountryCode: string;
 	Date: string;
@@ -15,7 +15,7 @@ interface Country {
 	TotalRecovered: number;
 }
 
-interface Global {
+export interface Global {
 	Date: string;
 	NewConfirmed: number;
 	NewDeaths: number;
