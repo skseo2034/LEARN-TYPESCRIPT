@@ -14,13 +14,14 @@ import {
 	CovidStauts,
 	Global,
 	Country,
+	CountrySummaryInfo,
 } from './covid/index';
 
 // utils
 function $(selector: string) {
 	return document.querySelector(selector);
 }
-function getUnixTimestamp(date: Date) {
+function getUnixTimestamp(date: Date | string) {
 	return new Date(date).getTime();
 }
 
@@ -28,8 +29,6 @@ function getUnixTimestamp(date: Date) {
 // 기본이 되는건 Element 그 보다 더 구체적으로 상속받아서 구현한게 HTMLElement, 그 보다 더 P tag 만을 구현한게 HTMLParagraphElement 이다.
 // deathsTotal 은 index.html 에서 보면 <p class="total deaths">0</p> p tag 이다.
 // var a: Element | HTMLElement | HTMLParagraphElement;
-
-const a = 10;
 
 const confirmedTotal = $('.confirmed-total') as HTMLSpanElement;
 const deathsTotal = $('.deaths') as HTMLParagraphElement;
@@ -67,11 +66,11 @@ function fetchCovidSummary(): Promise<AxiosResponse<CovidSummaryResponse>> {
 }
 
 function fetchCountryInfo(
-	countryCode: string,
+	countryName: string,
 	status: CovidStauts
 ): Promise<AxiosResponse<CountrySummaryResponse>> {
 	// status params: confirmed, recovered, deaths
-	const url = `https://api.covid19api.com/country/${countryCode}/status/${status}`;
+	const url = `https://api.covid19api.com/country/${countryName}/status/${status}`;
 	return axios.get(url);
 }
 
@@ -86,7 +85,7 @@ function initEvents() {
 	rankList.addEventListener('click', handleListClick);
 }
 
-async function handleListClick(event: any) {
+async function handleListClick(event: MouseEvent) {
 	let selectedId;
 	if (
 		event.target instanceof HTMLParagraphElement ||
@@ -125,15 +124,16 @@ async function handleListClick(event: any) {
 	isDeathLoading = false;
 }
 
-function setDeathsList(data: any) {
+function setDeathsList(data: CountrySummaryResponse) {
 	const sorted = data.sort(
-		(a: any, b: any) => getUnixTimestamp(b.Date) - getUnixTimestamp(a.Date)
+		(a: CountrySummaryInfo, b: CountrySummaryInfo) =>
+			getUnixTimestamp(b.Date) - getUnixTimestamp(a.Date)
 	);
-	sorted.forEach((value: any) => {
+	sorted.forEach((value: CountrySummaryInfo) => {
 		const li = document.createElement('li');
 		li.setAttribute('class', 'list-item-b flex align-center');
 		const span = document.createElement('span');
-		span.textContent = value.Cases;
+		span.textContent = value.Cases.toString();
 		span.setAttribute('class', 'deaths');
 		const p = document.createElement('p');
 		p.textContent = new Date(value.Date).toLocaleDateString().slice(0, -1);
@@ -148,19 +148,20 @@ function clearDeathList() {
 }
 
 Element;
-function setTotalDeathsByCountry(data: any) {
-	deathsTotal.innerText = data[0].Cases;
+function setTotalDeathsByCountry(data: CountrySummaryResponse) {
+	deathsTotal.innerText = data[0].Cases.toString();
 }
 
-function setRecoveredList(data: any) {
+function setRecoveredList(data: CountrySummaryResponse) {
 	const sorted = data.sort(
-		(a: any, b: any) => getUnixTimestamp(b.Date) - getUnixTimestamp(a.Date)
+		(a: CountrySummaryInfo, b: CountrySummaryInfo) =>
+			getUnixTimestamp(b.Date) - getUnixTimestamp(a.Date)
 	);
-	sorted.forEach((value: any) => {
+	sorted.forEach((value: CountrySummaryInfo) => {
 		const li = document.createElement('li');
 		li.setAttribute('class', 'list-item-b flex align-center');
 		const span = document.createElement('span');
-		span.textContent = value.Cases;
+		span.textContent = value.Cases.toString();
 		span.setAttribute('class', 'recovered');
 		const p = document.createElement('p');
 		p.textContent = new Date(value.Date).toLocaleDateString().slice(0, -1);
@@ -174,8 +175,8 @@ function clearRecoveredList() {
 	recoveredList.innerHTML = null;
 }
 
-function setTotalRecoveredByCountry(data: any) {
-	recoveredTotal.innerText = data[0].Cases;
+function setTotalRecoveredByCountry(data: CountrySummaryResponse) {
+	recoveredTotal.innerText = data[0].Cases.toString();
 }
 
 function startLoadingAnimation() {
@@ -259,7 +260,7 @@ function setCountryRanksByConfirmedCases(data: CovidSummaryResponse) {
 		li.setAttribute('class', 'list-item flex align-center');
 		li.setAttribute('id', value.Slug);
 		const span = document.createElement('span');
-		span.textContent = value.TotalConfirmed;
+		span.textContent = value.TotalConfirmed.toString();
 		span.setAttribute('class', 'cases');
 		const p = document.createElement('p');
 		p.setAttribute('class', 'country');
@@ -270,7 +271,7 @@ function setCountryRanksByConfirmedCases(data: CovidSummaryResponse) {
 	});
 }
 
-function setLastUpdatedTimestamp(data: any) {
+function setLastUpdatedTimestamp(data: CovidSummaryResponse) {
 	lastUpdatedTime.innerText = new Date(data.Date).toLocaleString();
 }
 

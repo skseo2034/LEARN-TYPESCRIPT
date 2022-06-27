@@ -225,6 +225,12 @@ devDenpencies 는 개발 할 때만 써는 라이브러리가 들어간다. 즉 
 들어가면 된다.
 - 개발시 비즈니스로직 application을 실행시키는 코드와 타입을 정의하는 코드를 분리하는게 좋다.
 	- 도메인 별로 폴더를 만들어서 사용하면 된다. 여기에서는 covid 퐅더에 index.ts를 만들었다.
+- 날짜 관련해서 실무에서는 대부분 string 로 넘어 온다. 따라서 날짜 관련해서 Date 타입과 string 타입을 동시에 처리 할 수 있는 메소드로 정의하는게 좋다.
+	```
+	function getUnixTimestamp(date: Date | string) {
+		return new Date(date).getTime();
+	}
+	```	
 
 ## 참고 자료
 
