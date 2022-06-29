@@ -6,9 +6,10 @@
 ...
 ## 자바스크립트 프로젝트에 타입스크립트 적용하기
 - 참조 링크
-	-  [모듈화 진행을 위한 타입스크립트 구성](https://github.com/joshua1988/learn-typescript/tree/master/setup)
+	- [모듈화 진행을 위한 타입스크립트 구성](https://github.com/joshua1988/learn-typescript/tree/master/setup)
+	- [JS에 TS 적용하기](https://joshua1988.github.io/ts/etc/convert-js-to-ts.html)
 
-0. 자바 스크립트 파일에 JSDoc으로 타입 시스템 입히기
+0. 자바 스크립트 파일에 JSDoc으로 타입 시스템 입히기 : 안해도 됨 참조사항 Type 적용을 JSDoc 로 하는 것임.
 1. 타입스크립트 프로젝트 생성 : 우리는 이미 생성된 프로젝트로 함으로 실제로는 타입스크립트 기본 환경 구성 이 맞다.
 	project > 마우스 오른쪽 통합 터미널 오픈(Open in integrated terminal)
 	- [x] NPM 초기화 : npm init -y 실행 package.json 생성
@@ -250,6 +251,7 @@ devDenpencies 는 개발 할 때만 써는 라이브러리가 들어간다. 즉 
 		- 대부분 types 에 @ 이가 들어가면(@types) 그게 다 Definitely Typed 아래로 정의 되어 있는 타입핑 라이브러리라 보면 된다.
 - [타입 정의가 제공되는 오픈소스 라이브러리 검색 사이트(타입스크립트 공식 사이트)](https://www.typescriptlang.org/dt/search?search=)
 	- 타입 선언이 되어 있는 npm package 를 찾아 주는 사이트
+- [디스트럭처링 문법 소개](https://joshua1988.github.io/vue-camp/es6+/destructuring.html)
 
 ## 라이브러리 소개
 - 바벨(Babel)
