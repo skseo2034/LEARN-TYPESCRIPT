@@ -213,7 +213,24 @@ node_modules
 					```
 					 import { Chart } from 'chart.js';
 					```
-					에 오류가 나지 않는다. chart.js 에서 바로가기를 해 보면 types > chart.js > index.d.ts 파일을 참조함을 알 수 있다.							
+					에 오류가 나지 않는다. chart.js 에서 바로가기를 해 보면 types > chart.js > index.d.ts 파일을 참조함을 알 수 있다.
+5. `strict` 옵션 추가 후 타입 정의
+	- [strict 옵션 문서](https://www.typescriptlang.org/tsconfig#strict)
+	- [strictNullCheck 옵션](https://www.typescriptlang.org/tsconfig#strictNullChecks)	
+	- [strictBindCallApply 옵션](https://www.typescriptlang.org/tsconfig#strictBindCallApply)
+	- [strictPropertyInitialization 옵션](https://www.typescriptlang.org/tsconfig#strictPropertyInitialization)
+	- [noImplicitThis 옵션](https://www.typescriptlang.org/tsconfig#noImplicitThis)
+	- tsconfig.json 에 `"strict": true` 로 설정한다.
+		- 설정하면 실제로 아래 코드 모두 true 가 된다.
+		```
+		"strict": true,
+		"strictNullChecks": true,
+		"strictFunctionTypes": true,
+		"strictBindCallApply": true,
+		"strictPropertyInitialization": true,
+		"noImplicitThis": true,
+		"alwaysStrict": true,
+		```
 ## Tip
 - TS 오류 발생시 오류 코드를 활용하거나 중요문장을 COPY 하여 구글에서 검색 한다.
 - 이미 React, vue 등 다른 front-end framework를 썼을때, 이미 빌드 시스템이 들어가 있는 프로게트인 경우에는
