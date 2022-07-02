@@ -220,6 +220,7 @@ node_modules
 	- [strictBindCallApply 옵션](https://www.typescriptlang.org/tsconfig#strictBindCallApply)
 	- [strictPropertyInitialization 옵션](https://www.typescriptlang.org/tsconfig#strictPropertyInitialization)
 	- [noImplicitThis 옵션](https://www.typescriptlang.org/tsconfig#noImplicitThis)
+	- [strictFunctionTypes 옵션](https://www.typescriptlang.org/tsconfig#strictFunctionTypes)
 	- tsconfig.json 에 `"strict": true` 로 설정한다.
 		- 설정하면 실제로 아래 코드 모두 true 가 된다.
 		```
