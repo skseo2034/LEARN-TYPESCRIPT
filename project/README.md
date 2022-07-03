@@ -232,6 +232,16 @@ node_modules
 		"noImplicitThis": true,
 		"alwaysStrict": true,
 		```
+	- 옵셔널 체이닝 연사자
+	 ```
+		recoveredList?.appendChild(li); // 옵셔널 체이닝 연산자 로 표현 한 것.
+		실제로 아래 문법과 동일하다.
+		if (recoveredList == null || recoveredList == undefined) {
+				return;
+			} else {
+				recoveredList.appendChild(li);
+		}
+	 ```	
 ## Tip
 - TS 오류 발생시 오류 코드를 활용하거나 중요문장을 COPY 하여 구글에서 검색 한다.
 - 이미 React, vue 등 다른 front-end framework를 썼을때, 이미 빌드 시스템이 들어가 있는 프로게트인 경우에는
@@ -270,6 +280,9 @@ devDenpencies 는 개발 할 때만 써는 라이브러리가 들어간다. 즉 
 - [타입 정의가 제공되는 오픈소스 라이브러리 검색 사이트(타입스크립트 공식 사이트)](https://www.typescriptlang.org/dt/search?search=)
 	- 타입 선언이 되어 있는 npm package 를 찾아 주는 사이트
 - [디스트럭처링 문법 소개](https://joshua1988.github.io/vue-camp/es6+/destructuring.html)
+- [타입스크립트 공식 문서](https://www.typescriptlang.org/docs/)
+- [타입스크립트 Deep Dive](https://basarat.gitbook.io/typescript/)
+- []
 
 ## 라이브러리 소개
 - 바벨(Babel)

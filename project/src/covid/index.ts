@@ -15,7 +15,7 @@ export interface Country {
 	TotalRecovered: number;
 }
 
-export interface Global {
+interface Global {
 	Date: string;
 	NewConfirmed: number;
 	NewDeaths: number;
