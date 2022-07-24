@@ -2,7 +2,7 @@
 	"compilerOptions": {
 		"allowJs": true,
 		"target": "ES5",
-		"outDir": "./src/main/webapp/js",
+		"outDir": "./src/main/webapp/dist",
 		"moduleResolution": "Node",
 		"lib": [
 			"ES2015",
@@ -20,3 +20,4 @@
 		"./src/**/*"
 	]
 }
+

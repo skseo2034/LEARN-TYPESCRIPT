@@ -1,0 +1,1 @@
+{"version":3,"file":"main.bundle.js","mappings":";;;;;AAAA;AACA;AACA;AACA","sources":["webpack://project/./src/main/webapp/js/index.js"],"sourcesContent":["function sum(a, b) {\r\n    return a + b;\r\n}\r\nsum(10, 20);\r\n"],"names":[],"sourceRoot":""}

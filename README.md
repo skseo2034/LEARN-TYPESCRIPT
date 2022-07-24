@@ -302,7 +302,27 @@ devDenpencies 는 개발 할 때만 써는 라이브러리가 들어간다. 즉 
 - [디스트럭처링 문법 소개](https://joshua1988.github.io/vue-camp/es6+/destructuring.html)
 - [타입스크립트 공식 문서](https://www.typescriptlang.org/docs/)
 - [타입스크립트 Deep Dive](https://basarat.gitbook.io/typescript/)
-- []
+- [타입스크립트 공식문서 사이트](typescriptlang.org)
+	- tool > TSConfig Reference 보면 설정 볼수 있음.
+- [타입스크립트 플레이그라운드 사이트](https://www.typescriptlang.org/play)
+	- 간단하게 ts 코드를 js코드로 변환 해 볼 수 있다.
+- [타입스크립트 설정 파일 옵션(문서)](https://www.typescriptlang.org/docs/handbook/compiler-options.html)
+- [MDN 자바스크립트 프로토타입과 상속 참조](https://developer.mozilla.org/ko/docs/Web/JavaScript/Inheritance_and_the_prototype_chain) 언어 한국어로 변경해서 보면 됨.
+	- javascript object 참조 : 구글 object mdn 검색
+- [자바스크립트 비동기 처리와 콜백 함수](https://joshua1988.github.io/web-development/javascript/javascript-asynchronous-operation/)
+- [자바스크립트 Promise 쉽게 이해하기](https://joshua1988.github.io/web-development/javascript/promise-for-beginners/)
+- [자바스크립트 async와 await](https://joshua1988.github.io/web-development/javascript/js-async-await/)
+- [MDN Array map() API 문서](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Array/map)
+- [VSCode 타입스크립트 소개 문서](https://code.visualstudio.com/docs/languages/typescript#_code-suggestions)
+- [VSCode Language Server Extension 가이드](https://code.visualstudio.com/api/language-extensions/language-server-extension-guide)
+- [Language Server 소개 사이트](https://langserver.org/)
+- [Language Server Protocol 개요](https://docs.microsoft.com/ko-kr/visualstudio/extensibility/language-server-protocol?view=vs-2019)
+- [ES6 Modules](https://joshua1988.github.io/vue-camp/es6+/modules.html)
+- [자바스크립트 모듈화 역사](https://d2.naver.com/helloworld/12864)
+- [타입스크립트 공식 사이트의 유틸리티 타입 문서](https://www.typescriptlang.org/docs/handbook/utility-types.html)
+- [Fetch API 설명 및 지원 브라우져 확인](https://developer.mozilla.org/ko/docs/Web/API/Fetch_API)
+- [es6 참조](https://joshua1988.github.io/vue-camp/textbook.html)
+- [화살표함수 MDN 문서](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Functions/Arrow_functions)
 
 ## 라이브러리 소개
 - 바벨(Babel)
@@ -327,3 +347,19 @@ devDenpencies 는 개발 할 때만 써는 라이브러리가 들어간다. 즉 
 - node 로 javascript 실행하기 : 해당 js 파일이 있는 폴더 이동 > 통합터미널 열기 > 명령어 실행(node js파일명) 예) node arrow-function.js
 - 파일형식 중 . 은 숨김파일이고, *rc 이면 설정파일을 의미한다. 설정파일은 js, yml, json 확장자를 가질수 있다. js 주석처리가 자유로워서 개인적으로 선호 한다.
 	- 예) .eslintrc.js, .babelrc.js 등
+- nodejs 패키지 효율 적 인 업그레이드 플러그 인 npm - check - updates
+	- 설치 npm install -g npm-check-updates
+	- 사용법
+    	- ncu를 CLI로 입력을 하면 실제 package.json이 업데이트가 되는 것이 아니라 업데이트 되는 항목을 보여줍니다.
+    	- ncu -u를 CLI로 입력을 하면 package.json의 dependencies와 devDependencies에 있는 각 패키지들이 최신버전으로 변경이 됩니다. 
+    	- 이때 실제로 node_modules폴더에 패키지가 변경되는 것이 아니므로 npm install을 실행해서 실제로 패키지를 변경해 주면 됩니다.
+		```
+    	$ ncu -u
+    	$ npm install 
+		```
+    	- 출처: https://stories.tistory.com/271 [나만모르는 이야기]
+- type vs interface
+    - 타입 별칭과 인터페이스의 가장 큰 차이점은 타입의 확장 가능 / 불가능 여부입니다. 
+    - 인터페이스는 확장이 가능한데 반해 타입 별칭은 확장이 불가능합니다.
+    - 따라서, 가능한한 type 보다는 interface로 선언해서 사용하는 것을 추천합니다.
+- Best Common Type : Typescript 가 해당 타입을 어떤 타입인지? 매겨나가는 알고리즘 이다.	
