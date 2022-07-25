@@ -22,6 +22,9 @@
 - 기타
   - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode), [Project Manager](https://marketplace.visualstudio.com/items?itemName=alefragnani.project-manager), [Auto Close Tag](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-close-tag), [GitLens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens), [Atom Keymap](https://marketplace.visualstudio.com/items?itemName=ms-vscode.atom-keybindings), [Jetbrains IDE Keymap](https://marketplace.visualstudio.com/items?itemName=isudox.vscode-jetbrains-keybindings) 등
 
+ ## 기본 타입 및 함수 타입 정의
+	- 해당 프로젝트에 class-note 폴더 참조 하면 된다.
+
 ## 최종 프로젝트 - 코로나 세계 현황판 만들기
 ...
 ## 자바스크립트 프로젝트에 타입스크립트 적용하기

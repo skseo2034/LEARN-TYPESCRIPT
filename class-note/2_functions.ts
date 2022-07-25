@@ -16,6 +16,12 @@ function sum(a: number, b: number): number {
     return a + b;
 }
 
+const sum1 = (a:number, b:number): number => {
+	return a + b;
+}
+
+sum1(20, 30);
+
 sum(10, 20, 30, 40); // 함수의 스펙(규칙)을 정확히 이해해서 오류는 표시한다.
 
 // 함수의 옵셔널(optional) 파라미터
