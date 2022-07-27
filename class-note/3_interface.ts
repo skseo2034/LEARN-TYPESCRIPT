@@ -1,3 +1,5 @@
+// 인터페이스는 통상 실무에서 api 호출한 결고값을 정의하는데 많이 활용된다.
+// FE 프레임워크를 활용할때 대부분 API 로 호출해서 데이터를 가지고 옴으로 많이 활용 된다.
 interface User {
     age: number;
     name: string;
@@ -23,6 +25,7 @@ const capt = {
 getUser(capt);
 
 // 함수의 스텍(구조)에 인터페이스를 활용
+// 여러명이 개발할때, 이 함수의 규칙은 이렇다 라고 정의 해서 활용할 수 있다.
 interface SumFunction {
     (a: number, b:number): number;
 }
