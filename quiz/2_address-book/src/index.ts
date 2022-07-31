@@ -107,6 +107,13 @@ heroes.map(function (hero) {
 	return hero.name;
 });
 
+const seo1: string[] = heroes.map(hero => {
+	return hero.name;
+});
+
+seo1.forEach(name => {
+	console.log(name);
+});
 //타입 단언
 let div1 = document.querySelector('#app');
 if (div1) {
