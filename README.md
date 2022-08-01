@@ -326,6 +326,7 @@ devDenpencies 는 개발 할 때만 써는 라이브러리가 들어간다. 즉 
 - [Fetch API 설명 및 지원 브라우져 확인](https://developer.mozilla.org/ko/docs/Web/API/Fetch_API)
 - [es6 참조](https://joshua1988.github.io/vue-camp/textbook.html)
 - [화살표함수 MDN 문서](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Functions/Arrow_functions)
+- [VSCode 타입스크립트 소개 문서](https://code.visualstudio.com/docs/languages/typescript#_code-suggestions)
 
 ## 라이브러리 소개
 - 바벨(Babel)

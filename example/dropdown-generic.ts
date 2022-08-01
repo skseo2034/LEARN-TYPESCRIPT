@@ -62,9 +62,13 @@ function createDropdownItem<T extends { toString : Function }>(item: DropdownIte
 emails.forEach(function (email) {
   const item = createDropdownItem<string>(email);
   const selectTag = document.querySelector('#email-dropdown');
-  if (selectTag) {
-  	selectTag.appendChild(item);
-  }
+  /* if (selectTag) {
+	  selectTag.appendChild(item);
+  } */
+
+  // 타입 단언 활용
+ // const selectTag = document.querySelector('#email-dropdown') as HTMLSelectElement;
+ //selectTag.appendChild(item);
 });
 
 
