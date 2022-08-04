@@ -47,9 +47,9 @@ type UpdateProduct = Partial<Product>
 //function updateProductItem(productItem: Product) {
 //function updateProductItem(productItem: UpdateProduct) {	
 function updateProductItem(productItem: UpdateProduct) {	
-
+	//
 }
-
+//updateProductItem({id:1, name:'seo'});
 // 4. 유틸리티 타입 구현하기 - Partial
 interface UserProfile {
 	username: string;
