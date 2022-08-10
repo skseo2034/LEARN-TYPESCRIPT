@@ -102,7 +102,7 @@
 3. 점진적인 타입 적용을 위한 프로젝트 환경 구성
 - [ ] 프로젝트 라이브러리 설치
 ```
-npm i -D @babel/core @babel/preset-env @babel/preset-typescript @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint prettier eslint-plugin-prettier
+npm i -D typescript @babel/core @babel/preset-env @babel/preset-typescript @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint prettier eslint-plugin-prettier
 ```
 - [ ] ESLint 설정 후 ESLint 플러그인 에러 해결
 	- project 폴더 밑에 .eslintrc.js 파일생성

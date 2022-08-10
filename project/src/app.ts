@@ -122,7 +122,7 @@ async function handleListClick(event: MouseEvent) {
 	isDeathLoading = false;
 }
 
-function setDeathsList(data: CountrySummaryResponse) {
+function setDeathsList(data: any) {
 	const sorted = data.sort(
 		(a: CountrySummaryInfo, b: CountrySummaryInfo) =>
 			getUnixTimestamp(b.Date) - getUnixTimestamp(a.Date)
