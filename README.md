@@ -101,6 +101,7 @@
 
 3. 점진적인 타입 적용을 위한 프로젝트 환경 구성
 - [ ] 프로젝트 라이브러리 설치
+	- 타입스크립트 및 문법검사(eslint), 코드 정리 도구 라이브러리(prettier) 추가
 ```
 npm i -D typescript @babel/core @babel/preset-env @babel/preset-typescript @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint prettier eslint-plugin-prettier
 ```
