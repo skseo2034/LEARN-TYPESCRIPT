@@ -80,21 +80,29 @@ function startApp() {
 
 // events
 function initEvents() {
+	if (!rankList) {
+		return;
+	}
+
 	rankList.addEventListener('click', handleListClick);
 }
 
-async function handleListClick(event: MouseEvent) {
+async function handleListClick(event: Event) {
 	let selectedId;
 	if (
 		event.target instanceof HTMLParagraphElement ||
 		event.target instanceof HTMLSpanElement
 	) {
-		selectedId = event.target.parentElement.id;
+		selectedId = (event.target.parentElement as HTMLElement).id;
 	}
 	if (event.target instanceof HTMLLIElement) {
 		selectedId = event.target.id;
 	}
 	if (isDeathLoading) {
+		return;
+	}
+
+	if (!selectedId) {
 		return;
 	}
 	clearDeathList();
