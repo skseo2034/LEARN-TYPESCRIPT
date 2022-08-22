@@ -14,16 +14,29 @@ import {
 } from './covid/index';
 
 // utils
-function $(selector: string) {
+/* function $(selector: string) {
 	return document.querySelector(selector);
+} */
+
+// 제네릭을 활용하여 null 도 없애고 타입을 지정한다. $<HTMLSpanElement>('.confirmed-total')
+/* function $<T extends HTMLElement>(selector: string) {
+	const element = document.querySelector(selector);
+	return element as T;
+} */
+
+// 아무것도 안넘길때 기본으로 HTMLDivElement 따라서 div 따로 $<HTMLDivElement>할 필요없음.
+function $<T extends HTMLElement = HTMLDivElement>(selector: string) {
+	const element = document.querySelector(selector);
+	return element as T;
 }
+
 function getUnixTimestamp(date: Date | string) {
 	return new Date(date).getTime();
 }
 
 // DOM
 // let a: Element | HTMLElement | HTMLParagraphElement;
-const confirmedTotal = $('.confirmed-total') as HTMLSpanElement;
+const confirmedTotal = $<HTMLSpanElement>('.confirmed-total');
 const deathsTotal = $('.deaths') as HTMLParagraphElement;
 const recoveredTotal = $('.recovered') as HTMLParagraphElement;
 const lastUpdatedTime = $('.last-updated-time') as HTMLParagraphElement;
@@ -145,12 +158,16 @@ function setDeathsList(data: any) {
 		p.textContent = new Date(value.Date).toLocaleDateString().slice(0, -1);
 		li.appendChild(span);
 		li.appendChild(p);
-		deathsList.appendChild(li);
+		deathsList?.appendChild(li);
 	});
 }
 
 function clearDeathList() {
-	deathsList.innerHTML = null;
+	if (!deathsList) {
+		return;
+	}
+
+	deathsList.innerHTML = '';
 }
 
 function setTotalDeathsByCountry(data: CountrySummaryResponse) {
@@ -172,12 +189,21 @@ function setRecoveredList(data: CountrySummaryResponse) {
 		p.textContent = new Date(value.Date).toLocaleDateString().slice(0, -1);
 		li.appendChild(span);
 		li.appendChild(p);
-		recoveredList.appendChild(li);
+		recoveredList?.appendChild(li);
+		//위의 옵셔널 체이닝 연산자와 같은 기능
+		/* if (recoveredList === null || recoveredList === undefined) {
+			return;
+		} else {
+			recoveredList?.appendChild(li);
+		} */
 	});
 }
 
 function clearRecoveredList() {
-	recoveredList.innerHTML = null;
+	if (!recoveredList) {
+		return;
+	}
+	recoveredList.innerHTML = '';
 }
 
 function setTotalRecoveredByCountry(data: CountrySummaryResponse) {
@@ -185,13 +211,13 @@ function setTotalRecoveredByCountry(data: CountrySummaryResponse) {
 }
 
 function startLoadingAnimation() {
-	deathsList.appendChild(deathSpinner);
-	recoveredList.appendChild(recoveredSpinner);
+	deathsList?.appendChild(deathSpinner);
+	recoveredList?.appendChild(recoveredSpinner);
 }
 
 function endLoadingAnimation() {
-	deathsList.removeChild(deathSpinner);
-	recoveredList.removeChild(recoveredSpinner);
+	deathsList?.removeChild(deathSpinner);
+	recoveredList?.removeChild(recoveredSpinner);
 }
 
 async function setupData() {
@@ -205,7 +231,7 @@ async function setupData() {
 
 function renderChart(data: number[], labels: string[]) {
 	const lineChart = $('#lineChart') as HTMLCanvasElement;
-	const ctx = lineChart.getContext('2d');
+	const ctx = lineChart.getContext('2d') as CanvasRenderingContext2D;
 	Chart.defaults.font.family = 'Exo 2';
 	new Chart(ctx, {
 		type: 'line',
@@ -273,7 +299,7 @@ function setCountryRanksByConfirmedCases(data: CovidSummaryResponse) {
 		p.textContent = value.Country;
 		li.appendChild(span);
 		li.appendChild(p);
-		rankList.appendChild(li);
+		rankList?.appendChild(li);
 	});
 }
 
